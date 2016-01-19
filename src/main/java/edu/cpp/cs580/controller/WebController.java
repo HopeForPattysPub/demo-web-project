@@ -133,4 +133,13 @@ public class WebController {
 		return modelAndView;
 	}
 
+	
+	/***********Assignment 3******************/
+	/**
+	 * This method is Jose's implementation of a HTTP GET method
+	 */
+	@RequestMapping(value = "/cs580/joseA3", method = RequestMethod.GET)
+	String joseA3() {
+		return "This is Jose's implementation of a HTTP GET method.";
+	}
 }
