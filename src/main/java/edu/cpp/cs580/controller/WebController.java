@@ -142,4 +142,12 @@ public class WebController {
 	String joseA3() {
 		return "This is Jose's implementation of a HTTP GET method.";
 	}
+	
+	/**
+	 * This method is Claude's implementation of a HTTP GET method
+	 */
+	@RequestMapping(value = "/cs580/claudeA3", method = RequestMethod.GET)
+	String claudeA3() {
+		return "This is Claude's implementation of a HTTP GET method.";
+	}
 }
