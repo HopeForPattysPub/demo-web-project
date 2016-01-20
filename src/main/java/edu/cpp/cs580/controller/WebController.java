@@ -158,5 +158,6 @@ public class WebController {
 	@RequestMapping(value = "/cs580/echo/{message}", method = RequestMethod.GET)
 	String mattA3(@PathVariable("message") String message) {
 		return "Matt: " + message;
+
 	}
 }
