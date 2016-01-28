@@ -15,6 +15,14 @@ import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
 
 
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.SQLException;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+
+
 /**
  * This is the controller used by Spring framework.
  * <p>
@@ -144,11 +152,29 @@ public class WebController {
 	}
 	
 	/**
-	 * This method is Claude's implementation of a HTTP GET method
+	 * A4 for Claude
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	@RequestMapping(value = "/cs580/claudeA3", method = RequestMethod.GET)
-	String claudeA3() {
-		return "This is Claude's implementation of a HTTP GET method.";
+	@RequestMapping(value = "/cs580/claudeA4/{Fname}", method = RequestMethod.GET)
+	String claudeA3(@PathVariable("Fname") String Fname) throws SQLException {
+		
+		// Server is local host, instance is dbo
+		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+      dataSource.setDriver(new com.mysql.jdbc.Driver());
+      dataSource.setUrl("jdbc:mysql://localhost/dbo");
+      dataSource.setUsername("root");
+      dataSource.setPassword("admin");
+      
+      JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+     
+      //jdbcTemplate.update("INSERT INTO test (`Fname`, `Lname`, `Age`) VALUES ('Bob', 'Dole', '10')");
+      
+      String sql = "SELECT Lname FROM test WHERE Fname = ?";
+      String Lname = (String)jdbcTemplate.queryForObject(sql, new Object[] {Fname}, String.class);
+      
+		
+		return "Querying " + Fname + ", " + Lname;
 	}
 	
 	/**
