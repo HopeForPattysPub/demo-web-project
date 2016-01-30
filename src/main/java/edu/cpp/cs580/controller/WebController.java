@@ -1,5 +1,7 @@
 package edu.cpp.cs580.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import edu.cpp.cs580.App;
 import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
+import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
+import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
 
 
 import java.sql.DriverManager;
@@ -186,4 +190,65 @@ public class WebController {
 		return "Matt: " + message;
 
 	}
+	
+	@RequestMapping(value = "/parser/steam/{url}", method = RequestMethod.GET)
+	String getSteamInfo(@PathVariable("url") String url) {
+		String retString = "";
+		try {
+			edu.cpp.cs580.webdata.parser.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.SteamJSONDataPage(url);
+			edu.cpp.cs580.webdata.parser.WebPageInfo wPI = steamJSONPage.getWebPageInfo();
+			retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";
+//			List<String> sList = new ArrayList<>();
+//			wPI.getGameAttributes().keySet().forEach(key -> {
+//				String s = key.substring(0,key.lastIndexOf("_"));
+//				sList.add(s + ": " + wPI.getGameAttributes().get(key) + "\n");
+//			});
+//			java.util.Iterator gAttIt = wPI.getGameAttributes().keySet().iterator();
+//			while(gAttIt.hasNext()) {
+			java.util.TreeSet<String> tSet = new java.util.TreeSet<>(wPI.getGameAttributes().keySet());
+			for(String key : tSet) {
+//				String key = (String)gAttIt.next();
+				retString += key.substring(0,key.lastIndexOf("_")) + ": ";
+				String type = key.substring(key.lastIndexOf("_") + 1);
+				switch(type)
+				{
+					case "string":
+						retString += (String)wPI.getGameAttributes().get(key);
+						break;
+					case "double":
+						retString += (Double)wPI.getGameAttributes().get(key);
+						break;
+					case "list":
+						List<String> list = (List<String>)wPI.getGameAttributes().get(key);
+						for(String value : list) {
+							retString += value;
+							if(!list.get(list.size()-1).equals(value)) retString += ", "; 
+						}
+						break;
+				}
+				retString += "<hr>";
+			}
+			
+		} catch (WebPageInfoNotInitializedException | IOException | ParserNotCompleteException e) { System.out.println("Parser Implemented Wrong. Sorry About That."); System.exit(1); }
+		System.out.println(retString);
+		return retString;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
