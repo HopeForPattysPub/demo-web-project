@@ -1,6 +1,7 @@
 package edu.cpp.cs580.controller;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hasher;
+import com.google.common.hash.Hashing;
+import com.google.common.net.HostAndPort;
+import com.google.common.net.HostSpecifier;
+
 import edu.cpp.cs580.App;
 import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
@@ -22,6 +30,8 @@ import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -232,6 +242,20 @@ public class WebController {
 		} catch (WebPageInfoNotInitializedException | IOException | ParserNotCompleteException e) { System.out.println("Parser Implemented Wrong. Sorry About That."); System.exit(1); }
 //		System.out.println(retString);
 		return retString;
+	}
+	
+	/**
+	 * This method is Jose's implementation of Google Guava for Assignment 4.
+	 * Given a message, it encodes it using the Guava SHA512 algorithm
+	 */
+	@RequestMapping(value = "/CS580/JoseA4/{message}", method = RequestMethod.GET)
+	String joseA4(@PathVariable("message") String message) {
+		//HashCode hash = HashCode.fromString(message);
+		HashFunction function = Hashing.sha512();
+		Hasher hasher = function.newHasher();		
+		hasher.putString(message, Charset.defaultCharset());
+		HashCode code = hasher.hash();
+		return code.toString();
 	}
 }
 
