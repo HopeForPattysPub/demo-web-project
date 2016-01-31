@@ -5,6 +5,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -166,6 +168,18 @@ public class WebController {
 	}
 	
 	/**
+	 * This method is Matthew's implementation of a HTTP GET Method
+	 */
+
+	@RequestMapping(value = "/cs580/echo/{message}", method = RequestMethod.GET)
+	String mattA3(@PathVariable("message") String message) {
+		return "Matt: " + message;
+
+	}
+	
+	/***********Assignment 4******************/
+	
+	/**
 	 * A4 for Claude
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
@@ -192,14 +206,49 @@ public class WebController {
 	}
 	
 	/**
-	 * This method is Matthew's implementation of a HTTP GET Method
+	 * This method is Jose's implementation of Google Guava for Assignment 4.
+	 * Given a message, it encodes it using the Guava SHA512 algorithm
 	 */
-
-	@RequestMapping(value = "/cs580/echo/{message}", method = RequestMethod.GET)
-	String mattA3(@PathVariable("message") String message) {
-		return "Matt: " + message;
-
+	@RequestMapping(value = "/CS580/JoseA4/{message}", method = RequestMethod.GET)
+	String joseA4(@PathVariable("message") String message) {
+		//HashCode hash = HashCode.fromString(message);
+		HashFunction function = Hashing.sha512();
+		Hasher hasher = function.newHasher();		
+		hasher.putString(message, Charset.defaultCharset());
+		HashCode code = hasher.hash();
+		return code.toString();
 	}
+	
+	/**
+	 * This method is Matthew's implementation of a Java JSON parser library for Assignment 4.
+	 * Builds a rudimentary JSON object and returns it and its XML equivalent.
+	 */
+	@RequestMapping(value = "/CS580/MattA4", method = RequestMethod.GET)
+	String mattA4() {
+		JSONObject test = new JSONObject();
+		JSONArray membersArray = new JSONArray();
+		test.put("members", membersArray);
+		JSONObject matt = new JSONObject();
+		matt.put("name", "Matthew Lai");
+		matt.put("university", "CPP");
+		matt.put("name_hash", "Matthew Lai".hashCode());
+		JSONObject claude = new JSONObject();
+		claude.put("name", "Claude Phan");
+		claude.put("university", "CPP");
+		claude.put("name_hash", "Claude Phan".hashCode());
+		JSONObject jose = new JSONObject();
+		jose.put("name", "Jose Figueroa");
+		jose.put("university", "CPP");
+		jose.put("name_hash", "Jose Figueroa".hashCode());
+		membersArray.put(matt);
+		membersArray.put(claude);
+		membersArray.put(jose);
+		
+		return test.toString() + "<hr><xmp>" + org.json.XML.toString(test) + "</xmp>";
+	}
+	
+	
+	/***********Project Mappings******************/
 	
 	@RequestMapping(value = "/parser/steam/{url}", method = RequestMethod.GET)
 	String getSteamInfo(@PathVariable("url") String url) {
@@ -208,16 +257,8 @@ public class WebController {
 			edu.cpp.cs580.webdata.parser.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.SteamJSONDataPage(url);
 			edu.cpp.cs580.webdata.parser.WebPageInfo wPI = steamJSONPage.getWebPageInfo();
 			retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";
-//			List<String> sList = new ArrayList<>();
-//			wPI.getGameAttributes().keySet().forEach(key -> {
-//				String s = key.substring(0,key.lastIndexOf("_"));
-//				sList.add(s + ": " + wPI.getGameAttributes().get(key) + "\n");
-//			});
-//			java.util.Iterator gAttIt = wPI.getGameAttributes().keySet().iterator();
-//			while(gAttIt.hasNext()) {
-			java.util.TreeSet<String> tSet = new java.util.TreeSet<>(wPI.getGameAttributes().keySet());
-			for(String key : tSet) {
-//				String key = (String)gAttIt.next();
+			
+			for(String key : new java.util.TreeSet<String>(wPI.getGameAttributes().keySet())) {
 				retString += key.substring(0,key.lastIndexOf("_")) + ": ";
 				String type = key.substring(key.lastIndexOf("_") + 1);
 				switch(type)
@@ -242,20 +283,6 @@ public class WebController {
 		} catch (WebPageInfoNotInitializedException | IOException | ParserNotCompleteException e) { System.out.println("Parser Implemented Wrong. Sorry About That."); System.exit(1); }
 //		System.out.println(retString);
 		return retString;
-	}
-	
-	/**
-	 * This method is Jose's implementation of Google Guava for Assignment 4.
-	 * Given a message, it encodes it using the Guava SHA512 algorithm
-	 */
-	@RequestMapping(value = "/CS580/JoseA4/{message}", method = RequestMethod.GET)
-	String joseA4(@PathVariable("message") String message) {
-		//HashCode hash = HashCode.fromString(message);
-		HashFunction function = Hashing.sha512();
-		Hasher hasher = function.newHasher();		
-		hasher.putString(message, Charset.defaultCharset());
-		HashCode code = hasher.hash();
-		return code.toString();
 	}
 }
 
