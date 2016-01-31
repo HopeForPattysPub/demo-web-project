@@ -20,7 +20,6 @@ CREATE TABLE Items
 (	Title VARCHAR(50) NOT NULL
     , System VARCHAR(25) NOT NULL
     , ItemID BIGINT UNSIGNED NOT NULL
-    , Price	DECIMAL(10, 2) NOT NULL
     , PRIMARY KEY (ItemID)
     , FOREIGN KEY (System) REFERENCES Systems(SystemID)
 );
@@ -37,8 +36,27 @@ CREATE TABLE Stores
 CREATE TABLE StoreProducts
 (	StoreID INTEGER UNSIGNED
     , ItemID BIGINT UNSIGNED
+    , StoreProductID VARCHAR(255) NOT NULL
+    , Price	DECIMAL(10, 2) NOT NULL
     , URL VARCHAR(500) NOT NULL
     , PRIMARY KEY (StoreID, ItemID)
     , FOREIGN KEY (StoreID) REFERENCES Stores(StoreID)
     , FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+);
+
+#Create the table for user accounts
+CREATE TABLE Users
+(	Username VARCHAR(20) NOT NULL
+	, Email VARCHAR(100) UNIQUE NOT NULL
+    , UserPassword CHAR(128) NOT NULL
+    , PRIMARY KEY (Username)
+);
+
+#Table which will store user requested notifications
+CREATE TABLE Notifications
+(
+	Username VARCHAR(20) NOT NULL
+    , ItemID BIGINT UNSIGNED NOT NULL
+    , CurrentPrice DECIMAL(10, 2) NOT NULL
+    , NotifyPrice DECIMAL(10, 2)
 );
