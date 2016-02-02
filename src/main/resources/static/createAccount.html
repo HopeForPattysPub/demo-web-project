@@ -1,0 +1,57 @@
+<html ng-app="newAccountScreen">
+	<!-- This page uses AngularJS -->
+	<head>
+	   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
+	    <script src="/js/steam-parse-test-ajs.js"></script>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	</head>
+
+	<body ng-controller="newAccountInfoPage">
+
+	    <hr>
+
+	    <div>
+	        <div style="text-align:right">
+	           <a href="http://localhost:8080/welcome.html">Home</a>
+	        </div>
+	        <div>
+	            <label>Create New Account</label>
+	        </div>
+
+	        <hr>
+
+	        <div>
+	            <b><label>Please fill the information below to create your new account.</label></b>
+	            <br>
+	            
+	            <table style="border-collapse: collapse; border:0px;">
+	              <tr >
+	                 <td style="border:0px;" align:"left"> Username: </td>
+	                 <td style="border:0px;" align:"left"> <input type="text" id="userName" ng-model="userNameToSearch"></td>
+	              </tr>
+	              <tr>
+                    <td style="border:0px;" align:"left"> Password: </td>
+                    <td style="border:0px;" align:"left"> <input type="text" id="passWord" ng-model="passWordToSearch"></td>
+                 </tr>
+                 <tr>
+                    <td style="border:0px;" align:"left"> Retype Password: </td>
+                    <td style="border:0px;" align:"left"> <input type="text" id="passWordCheck" ng-model="passWordCheck"></td>
+                 </tr>
+                 <tr>
+                    <td style="border:0px;" align:"left"> Email: </td>
+                    <td style="border:0px;" align:"left"> <input type="text" id="userEmail" ng-model="emailToSearch"></td>
+                 </tr>
+               </table>  
+	            <br>
+	            <button ng-click="createInTest()">Create</button>
+	            
+	            <br><hr><br>
+	            <a href="http://localhost:8080/login.html">Back</a>
+				<p ng-bind-html="pageOutput"></p>
+	        </div>
+	    </div>
+
+	</body>
+
+</html>

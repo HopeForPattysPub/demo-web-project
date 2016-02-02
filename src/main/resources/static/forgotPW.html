@@ -1,0 +1,48 @@
+<html ng-app="recoveryScreen">
+	<!-- This page uses AngularJS -->
+	<head>
+	   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
+	    <script src="/js/steam-parse-test-ajs.js"></script>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	</head>
+
+	<body ng-controller="recoveryInfoPage">
+
+	    <hr>
+
+	    <div>
+	        <div>
+	            <label>Password Recovery</label>
+	        </div>
+
+	        <hr>
+
+	        <div>
+	            <b><label>Please type in your Username name and email to reset your password.</label></b>
+	            <br>
+	            
+	            <table style="border-collapse: collapse; border:0px;">
+                 <tr >
+                    <td style="border:0px;" align:"left"> Username: </td>
+                    <td style="border:0px;" align:"left"> <input type="text" id="userName" ng-model="userNameToSearch"></td>
+                 </tr>
+                 <tr>
+                    <td style="border:0px;" align:"left"> Email: </td>
+                    <td style="border:0px;" align:"left"> <input type="text" id="userEmail" ng-model="emailToSearch"></td>
+                 </tr>
+               </table>  
+	            <br>
+	            <button ng-click="recoveryTest()">Submit</button>
+	            
+	            <br><hr><br>
+	            <a href="http://localhost:8080/welcome.html">Home</a>
+	            <a href="http://localhost:8080/login.html">Back</a>
+               <a href="http://localhost:8080/createAccount.html">Create Account</a>
+	           	<p ng-bind-html="pageOutput"></p>
+	        </div>
+	    </div>
+
+	</body>
+
+</html>

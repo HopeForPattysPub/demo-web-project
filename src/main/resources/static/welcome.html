@@ -1,0 +1,37 @@
+<html ng-app="WelcomeScreen">
+	<!-- This page uses AngularJS -->
+	<head>
+	   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
+	    <script src="/js/steam-parse-test-ajs.js"></script>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	</head>
+
+	<body ng-controller="welcomeInfoPage">
+
+	    <hr>
+
+	    <div>
+	        <div style="text-align:right">
+	            <a href="http://localhost:8080/login.html">Login</a>
+	            <a href="http://localhost:8080/createAccount.html">Create Account</a>
+	            <a href="http://localhost:8080/forgotPW.html">Forgot Password?</a>
+	            	                           
+	        </div>
+            <div>
+               <label>Welcome to the GameTracker 2000</label>
+           </div>
+
+	        <hr>
+
+	        <div>
+	            <b><label>Below at the top 100 games and their price tracking</label></b>
+	            
+
+				<p ng-bind-html="pageOutput"></p>
+	        </div>
+	    </div>
+
+	</body>
+
+</html>

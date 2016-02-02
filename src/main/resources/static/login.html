@@ -1,0 +1,51 @@
+<html ng-app="LoginScreen">
+	<!-- This page uses AngularJS -->
+	<head>
+	   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
+	    <script src="/js/steam-parse-test-ajs.js"></script>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	</head>
+
+	<body ng-controller="loginInfoPage">
+
+	    <hr>
+
+	    <div>
+	        <div style="text-align:right">
+	           <a href="http://localhost:8080/welcome.html">Home</a>
+	        </div>
+	        
+	        <div>
+	            <label>Welcome, please log in below. If you don't remember you password, click on forgot password for help.</label>
+	            <br>
+	            <label>If you do not have an account, click on link below to create one.</label>
+	        </div>
+
+	        <br>
+
+	        <div>
+	            <hr>
+	            <table style="border-collapse: collapse; border:0px;">
+                 <tr >
+                    <td style="border:0px;" align:"left"> Username: </td>
+                    <td style="border:0px;" align:"left"> <input type="text" id="userName" ng-model="userNameToSearch"></td>
+                 </tr>
+                 <tr>
+                    <td style="border:0px;" align:"left"> Password: </td>
+                    <td style="border:0px;" align:"left"> <input type="text" id="passWord" ng-model="passWordToSearch"></td>
+                 </tr>
+               </table>  
+	            <br>
+	            <button ng-click="logInTest()">Login</button>
+	            
+	            <br><hr><br>
+	            <a href="http://localhost:8080/createAccount.html">Create Account</a>
+	            <a href="http://localhost:8080/forgotPW.html">Forgot Password?</a>
+				<p ng-bind-html="pageOutput"></p>
+	        </div>
+	    </div>
+
+	</body>
+
+</html>
