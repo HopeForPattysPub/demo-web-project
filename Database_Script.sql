@@ -22,6 +22,8 @@ CREATE TABLE Items
     , ItemID BIGINT UNSIGNED NOT NULL
     , PRIMARY KEY (ItemID)
     , FOREIGN KEY (System) REFERENCES Systems(SystemID)
+		ON UPDATE CASCADE
+        ON DELETE NO ACTION
 );
 
 #Create the table which holds the different stores
@@ -41,7 +43,21 @@ CREATE TABLE StoreProducts
     , URL VARCHAR(500) NOT NULL
     , PRIMARY KEY (StoreID, ItemID)
     , FOREIGN KEY (StoreID) REFERENCES Stores(StoreID)
+		ON UPDATE CASCADE
+        ON DELETE CASCADE
     , FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+		ON UPDATE CASCADE
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE PriceHistory
+(	ItemID BIGINT UNSIGNED
+	, PriceDate TIMESTAMP NOT NULL
+    , Price	DECIMAL(10, 2)
+    , PRIMARY KEY (ItemID, PriceDate)
+    , FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+		ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 #Create the table for user accounts
