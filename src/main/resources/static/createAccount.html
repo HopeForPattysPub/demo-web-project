@@ -3,8 +3,9 @@
 	<head>
 	   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
-	    <script src="/js/steam-parse-test-ajs.js"></script>
-	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+	   <script src="/js/createAccountLogic.js"></script>
+	   <link rel="stylesheet" type="text/css" href="/css/style.css">
 	</head>
 
 	<body ng-controller="newAccountInfoPage">
@@ -32,11 +33,11 @@
 	              </tr>
 	              <tr>
                     <td style="border:0px;" align:"left"> Password: </td>
-                    <td style="border:0px;" align:"left"> <input type="text" id="passWord" ng-model="passWordToSearch"></td>
+                    <td style="border:0px;" align:"left"> <input type="password" id="passWord" ng-model="passWordToSearch"></td>
                  </tr>
                  <tr>
                     <td style="border:0px;" align:"left"> Retype Password: </td>
-                    <td style="border:0px;" align:"left"> <input type="text" id="passWordCheck" ng-model="passWordCheck"></td>
+                    <td style="border:0px;" align:"left"> <input type="password" id="passWordCheck" ng-model="passWordCheck"></td>
                  </tr>
                  <tr>
                     <td style="border:0px;" align:"left"> Email: </td>
@@ -44,7 +45,7 @@
                  </tr>
                </table>  
 	            <br>
-	            <button ng-click="createInTest()">Create</button>
+	            <button ng-click="createAcc()">Create</button>
 	            
 	            <br><hr><br>
 	            <a href="http://localhost:8080/login.html">Back</a>

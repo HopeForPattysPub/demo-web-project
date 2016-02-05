@@ -32,6 +32,7 @@ import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.ParseException;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -203,6 +204,137 @@ public class WebController {
       
 		
 		return "Querying " + Fname + ", " + Lname;
+	}
+	
+	/**
+	 * Login Logic
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@RequestMapping(value = "/login/{Pw}/{Uname}", method = RequestMethod.GET)
+	int claudeLogin(@PathVariable("Pw") String Pw, @PathVariable("Uname") String Uname) throws SQLException {
+		
+		// Server is local host, instance is dbo
+		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+      dataSource.setDriver(new com.mysql.jdbc.Driver());
+      dataSource.setUrl("jdbc:mysql://localhost/awsdb");
+      dataSource.setUsername("root");
+      dataSource.setPassword("admin");
+      
+      JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+      String pwChecker;
+      Integer tempChecker;
+      String sql;
+      //check if Uname exists
+    
+      sql = "SELECT count(UserPassword) FROM awsdb.users WHERE Username = ?";
+      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Uname}, Integer.class);
+      System.out.println("UnCheck " + tempChecker + " login: " + Uname);
+      if(tempChecker != 1)
+      {
+      	return 0;
+      }
+      
+      //Check PW
+      sql = "SELECT UserPassword FROM awsdb.Users WHERE Username = ?";
+      pwChecker = (String)jdbcTemplate.queryForObject(sql, new Object[] {Uname}, String.class);
+      System.out.println("DB Pw lookup: " + pwChecker);
+      System.out.println("Input pw: " + Pw);
+      if(!pwChecker.equals(Pw))
+      {
+      	return 0;
+      }
+      else
+      {
+      	return 1;
+      }
+      
+	}
+	
+	/**
+	 * Recovery Logic
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@RequestMapping(value = "/recovery/{Un}/{Email}", method = RequestMethod.GET)
+	int recovery(@PathVariable("Un") String Uname, @PathVariable("Email") String Email) throws SQLException {
+		
+		// Server is local host, instance is dbo
+		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+      dataSource.setDriver(new com.mysql.jdbc.Driver());
+      dataSource.setUrl("jdbc:mysql://localhost/awsdb");
+      dataSource.setUsername("root");
+      dataSource.setPassword("admin");
+      
+      JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+      Integer tempChecker;
+      String sql;
+      //check if Uname exists
+    
+      sql = "SELECT count(UserPassword) FROM awsdb.users WHERE Username = ? and Email = ?";
+      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Uname, Email}, Integer.class);
+      System.out.println("UnCheck " + tempChecker + "UN: " + Uname + " Email: " + Email);
+      if(tempChecker != 1)
+      {
+      	return 0;
+      }
+      else
+      	return 1;
+      
+      
+      
+	}
+	
+	
+	
+	
+	/**
+	 * Create Account Logic
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@RequestMapping(value = "/newaccount/{Email}/{Pw}/{Uname}", method = RequestMethod.GET)
+	int claudeLogin(@PathVariable("Email") String Email, @PathVariable("Pw") String Pw, @PathVariable("Uname") String Uname) throws SQLException {
+		System.out.println("inside web");
+		// Server is local host, instance is dbo
+		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+      dataSource.setDriver(new com.mysql.jdbc.Driver());
+      dataSource.setUrl("jdbc:mysql://localhost/awsdb");
+      dataSource.setUsername("root");
+      dataSource.setPassword("admin");
+      
+      JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+      Integer tempChecker;
+      
+      //Check UN
+      String sql = "SELECT count(Email) FROM awsdb.users WHERE Username = ?";
+      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Uname}, Integer.class);
+      //System.out.println(tempChecker);
+      
+      if(tempChecker != 0)
+      {
+      	return 0;
+      }
+      
+      //Check Email
+      sql = "SELECT count(Username) FROM awsdb.users WHERE Email = ?";
+      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Email}, Integer.class);
+      System.out.println(tempChecker);
+      
+      if(tempChecker != 0)
+      {
+      	return 1;
+      }
+      
+      
+      //Add user to DB
+      jdbcTemplate.update(
+      	    "INSERT INTO awsdb.Users (Username, Email, UserPassword) VALUES (?, ?, ?)",
+      	    new Object[]{Uname, Email, Pw}
+      );
+      
+		
+		return 3;
 	}
 	
 	/**
