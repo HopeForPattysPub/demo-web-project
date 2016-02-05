@@ -54,16 +54,16 @@ CREATE TABLE StoreProducts
 #Create the table for Price history
 CREATE TABLE PriceHistory
 (	ItemID BIGINT UNSIGNED NOT NULL
-	, StoreID INTEGER NOT NULL
+	, StoreID INTEGER UNSIGNED NOT NULL
     , PriceDate TIMESTAMP NOT NULL
     , Price DECIMAL(10, 2) NOT NULL
     , PRIMARY KEY (ItemID, PriceDate, StoreID)
-    , FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
-		ON UPDATE CASCADE
-        ON DELETE CASCADE
     , FOREIGN KEY (StoreID) REFERENCES Stores(StoreID)
-		ON UPDATE CASCADE
-        ON DELETE CASCADE
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
+    , FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 #Create the table for user accounts
