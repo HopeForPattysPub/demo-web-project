@@ -81,4 +81,7 @@ CREATE TABLE Notifications
     , ItemID BIGINT UNSIGNED NOT NULL
     , CurrentPrice DECIMAL(10, 2) NOT NULL
     , NotifyPrice DECIMAL(10, 2)
+    , FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
