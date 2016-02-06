@@ -16,8 +16,8 @@ public class DBSingleton {
 			cpds.setJdbcUrl("jdbc:mysql://localhost:3306/awsdb");	//TODO: Change this once moved to AWS
 			cpds.setUser("root");
 			cpds.setPassword("admin1");
-			cpds.setMaxPoolSize(20);
-			cpds.setMinPoolSize(3);
+			cpds.setMaxPoolSize(50);
+			cpds.setMinPoolSize(10);
 			cpds.setAcquireIncrement(1);
 			cpds.setTestConnectionOnCheckin(true);
 			cpds.setIdleConnectionTestPeriod(300);

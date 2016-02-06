@@ -46,11 +46,19 @@ public class TestDBSingleton {
 				System.out.println(username + "\n" + email + "\n" + password + "\n");
 			}
 			
-			if (c != null)
-				c.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
