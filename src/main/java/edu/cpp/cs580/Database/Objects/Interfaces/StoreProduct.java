@@ -1,4 +1,4 @@
-package edu.cpp.cs580.Database.Objects;
+package edu.cpp.cs580.Database.Objects.Interfaces;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -15,5 +15,5 @@ public interface StoreProduct {
 	public void setPriceDate(Date date);
 	public void setStoreID(int id);
 	public void setStoreProductID(String id);
-	public String setURL(String ur);
+	public void setURL(String ur);
 }

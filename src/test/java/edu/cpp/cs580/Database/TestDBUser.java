@@ -3,7 +3,8 @@ package edu.cpp.cs580.Database;
 import org.junit.Test;
 
 import edu.cpp.cs580.Database.Objects.DBUser;
-import edu.cpp.cs580.Database.Objects.User;
+import edu.cpp.cs580.Database.Objects.Interfaces.User;
+
 import org.junit.Assert;
 
 public class TestDBUser {

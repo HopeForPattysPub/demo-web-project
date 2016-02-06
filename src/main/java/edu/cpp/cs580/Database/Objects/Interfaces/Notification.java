@@ -1,4 +1,4 @@
-package edu.cpp.cs580.Database.Objects;
+package edu.cpp.cs580.Database.Objects.Interfaces;
 
 import java.math.BigInteger;
 

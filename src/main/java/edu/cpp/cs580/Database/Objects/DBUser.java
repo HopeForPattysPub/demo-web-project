@@ -1,5 +1,7 @@
 package edu.cpp.cs580.Database.Objects;
 
+import edu.cpp.cs580.Database.Objects.Interfaces.User;
+
 public class DBUser implements User {
 	/******************Data Members********************/
 	private String email,
