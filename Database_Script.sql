@@ -28,7 +28,7 @@ CREATE TABLE Items
 
 #Create the table which holds the different stores
 CREATE TABLE Stores
-(	StoreName VARCHAR(50) NOT NULL
+(	StoreName VARCHAR(50) UNIQUE NOT NULL
 	, StoreID INTEGER UNSIGNED NOT NULL
     , WebPage VARCHAR(255) NOT NULL
 	, PRIMARY KEY (StoreID)
