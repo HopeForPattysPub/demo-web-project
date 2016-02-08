@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 import org.junit.Assert;
 
-public class TestDBSingleton {
+public class DBSingletonTest {
 	@Test
 	public void testMakePool() {
 		boolean result = DBSingleton.makePool();
