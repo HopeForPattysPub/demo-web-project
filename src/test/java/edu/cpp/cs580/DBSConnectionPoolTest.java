@@ -2,7 +2,7 @@ package edu.cpp.cs580;
 
 import org.junit.Test;
 
-import edu.cpp.cs580.Database.DBSingleton;
+import edu.cpp.cs580.Database.DBConnectionPool;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,28 +11,28 @@ import java.sql.Statement;
 
 import org.junit.Assert;
 
-public class DBSingletonTest {
+public class DBSConnectionPoolTest {
 	@Test
-	public void testMakePool() {
-		boolean result = DBSingleton.makePool();
+	public void testGetInstance() {
+		DBConnectionPool test = DBConnectionPool.getInstance();
 		
-		Assert.assertEquals(true, result);
-		
+		Assert.assertNotNull(test);
 	}
 	
 	@Test
 	public void testGetConnection() {
-		Connection c = DBSingleton.getConnection();
+		DBConnectionPool test = DBConnectionPool.getInstance();
+		Connection c = test.getConnection();
 		
 		Assert.assertNotNull(c);
 	}
 	
 	@Test
 	public void testConnection() {
+		DBConnectionPool pool = DBConnectionPool.getInstance();
 		Connection c = null;
 		try {
-			DBSingleton.makePool();
-			c = DBSingleton.getConnection();
+			c = pool.getConnection();
 			Statement s = c.createStatement();
 			ResultSet result = s.executeQuery("SELECT * FROM USERS");
 			
