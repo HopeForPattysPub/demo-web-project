@@ -19,7 +19,7 @@ CREATE TABLE Systems
 CREATE TABLE Items
 (	Title VARCHAR(50) NOT NULL
     , System VARCHAR(25) NOT NULL
-    , ItemID BIGINT UNSIGNED NOT NULL
+    , ItemID BIGINT NOT NULL
     , PRIMARY KEY (ItemID)
     , FOREIGN KEY (System) REFERENCES Systems(SystemID)
 		ON DELETE NO ACTION
@@ -37,7 +37,7 @@ CREATE TABLE Stores
 #Create the table which maps items with stores
 CREATE TABLE StoreProducts
 (	StoreID INTEGER UNSIGNED
-    , ItemID BIGINT UNSIGNED
+    , ItemID BIGINT
     , StoreProductID VARCHAR(255) NOT NULL
     , Price	DECIMAL(10, 2) NOT NULL
     , PriceDate TIMESTAMP NOT NULL
@@ -53,7 +53,7 @@ CREATE TABLE StoreProducts
 
 #Create the table for Price history
 CREATE TABLE PriceHistory
-(	ItemID BIGINT UNSIGNED NOT NULL
+(	ItemID BIGINT NOT NULL
 	, StoreID INTEGER UNSIGNED NOT NULL
     , PriceDate TIMESTAMP NOT NULL
     , Price DECIMAL(10, 2) NOT NULL
@@ -78,7 +78,7 @@ CREATE TABLE Users
 CREATE TABLE Notifications
 (
 	Username VARCHAR(20) NOT NULL
-    , ItemID BIGINT UNSIGNED NOT NULL
+    , ItemID BIGINT NOT NULL
     , CurrentPrice DECIMAL(10, 2) NOT NULL
     , NotifyPrice DECIMAL(10, 2)
     , FOREIGN KEY (ItemID) REFERENCES Items(ItemID)

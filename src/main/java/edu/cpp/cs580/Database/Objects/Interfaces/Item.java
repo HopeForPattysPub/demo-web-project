@@ -1,12 +1,10 @@
 package edu.cpp.cs580.Database.Objects.Interfaces;
 
-import java.math.BigInteger;
-
 public interface Item {
-	public BigInteger getItemID();
+	public long getItemID();
 	public String getSystem();
 	public String getTitle();
-	public void setItemID(BigInteger id);
+	public void setItemID(long id);
 	public void setSystem(String sys);
 	public void setTitle(String tle);
 }

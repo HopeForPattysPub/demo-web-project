@@ -10,6 +10,8 @@ public class DBConnectionPool {
 	private static DBConnectionPool instance = null;
 	private ComboPooledDataSource cpds = null;
 	
+	public final static String SCHEMA = "awsdb";
+	
 	/**
 	 * Private default constructor to force Singleton design
 	 */
@@ -52,6 +54,18 @@ public class DBConnectionPool {
 	}
 	
 	/**
+	 * Closes the connection passed by the parameter
+	 * @param c	Connection to close
+	 */
+	public void closeConnection(Connection c) {
+		try {
+			c.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	/**
 	 * Get the Singleton instance of DBSingleton
 	 * @return instance of DBConnectionSingleton
 	 */
@@ -61,4 +75,5 @@ public class DBConnectionPool {
 		
 		return instance;
 	}
+
 }

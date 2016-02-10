@@ -1,12 +1,10 @@
 package edu.cpp.cs580.Database.Objects;
 
-import java.math.BigInteger;
-
 import edu.cpp.cs580.Database.Objects.Interfaces.Item;
 
 public class DBItem implements Item {
 	/******************Data Members*******************/
-	private BigInteger itemID;
+	private long	 itemID;
 	private String system;
 	private String title;
 	
@@ -15,7 +13,7 @@ public class DBItem implements Item {
 	 * Default constructor. Will initialize all data members to NULL
 	 */
 	public DBItem() {
-		itemID = null;
+		itemID = 0;
 		system = null;
 		title = null;
 	}
@@ -26,7 +24,7 @@ public class DBItem implements Item {
 	 * @param sys	Item system
 	 * @param tle	Item title
 	 */
-	public DBItem(BigInteger id, String sys, String tle) {
+	public DBItem(long id, String sys, String tle) {
 		itemID = id;
 		system = sys;
 		title = tle;
@@ -34,7 +32,7 @@ public class DBItem implements Item {
 	
 	/******************Methods************************/
 	@Override
-	public BigInteger getItemID() {
+	public long getItemID() {
 		return itemID;
 	}
 
@@ -49,7 +47,7 @@ public class DBItem implements Item {
 	}
 
 	@Override
-	public void setItemID(BigInteger id) {
+	public void setItemID(long id) {
 		itemID = id;
 	}
 
