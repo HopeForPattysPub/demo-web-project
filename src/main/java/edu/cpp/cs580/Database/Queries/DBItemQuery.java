@@ -24,24 +24,26 @@ public class DBItemQuery implements ItemQuery {
 		String insertQuery = "INSERT INTO awsdb.items(Title, System, ItemID) VALUES(?,?,?)";
 		boolean result = true;
 		
+		PreparedStatement stmt = null;
 		try {
 			long itemID = calculateItemID();
 			
-			PreparedStatement stmt = connect.prepareStatement(insertQuery);
+			stmt = connect.prepareStatement(insertQuery);
 			stmt.setString(1, title);
 			stmt.setString(2, systemID);
 			stmt.setLong(3, itemID);
-			int queryResult = stmt.executeUpdate();
-			
-			//No updates where performed. More than like system does not exist.
-			//Foreign Key failure.
-			if (queryResult == 0)
-				result = false;
-			
+			stmt.executeUpdate();
 			stmt.close();
 			
 		} catch (SQLException e) {
+			//This means there was an error with executing the query, so return false.
 			System.err.println(e.getMessage());
+			result = false;
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		pool.closeConnection(connect);
@@ -63,8 +65,9 @@ public class DBItemQuery implements ItemQuery {
 			//ItemID is Primary Key so there will only be one. Like Highlander.
 			if (queryResult.next()) {
 				String resTitle = queryResult.getString("Title"),
-					   resSystemID = queryResult.getString("SystemID");
+					   resSystemID = queryResult.getString("System");
 				long resItemID = queryResult.getLong("ItemID");
+				System.err.println(resTitle + " " + resSystemID + " " + resItemID);
 				result = new DBItem(resItemID, resSystemID, resTitle);
 			}
 			
@@ -76,23 +79,30 @@ public class DBItemQuery implements ItemQuery {
 		pool.closeConnection(connect);
 		return result;
 	}
-
+	
 	@Override
-	public Map<Long, Item> getItems(String option) {
+	public Map<Long, Item> getItems(String option, String value) {
 		Connection connect = pool.getConnection();
-		String query = "SELECT * FROM awsdb.Items WHERE ItemID = ?";
+		String query;
 		Map<Long, Item> result = new HashMap<Long, Item>();
+		
+		if (option.equalsIgnoreCase("Title"))
+			query = "SELECT * FROM awsdb.Items WHERE Title = ?";
+		else
+			query = "SELECT * FROM awsdb.Items WHERE SystemID = ?";
 		
 		try {
 			PreparedStatement stmt = connect.prepareStatement(query);
-			stmt.setString(1, option);
+			stmt.setString(1, value);
 			ResultSet queryResult = stmt.executeQuery();
 			
 			//There are results, so populate the map with items
 			while (queryResult.next()) {
 				String resTitle = queryResult.getString("Title"),
-					   resSystemID = queryResult.getString("SystemID");
+					   resSystemID = queryResult.getString("System");
 				long resItemID = queryResult.getLong("ItemID");
+				
+				System.err.println(resTitle + " " + resSystemID + " " + resItemID);
 				result.put(resItemID, new DBItem(resItemID, resSystemID, resTitle));
 			}
 			
@@ -104,7 +114,7 @@ public class DBItemQuery implements ItemQuery {
 		pool.closeConnection(connect);
 		return result;
 	}
-
+	
 	@Override
 	public boolean removeItem(long itemID) {
 		Connection connect = pool.getConnection();
@@ -144,24 +154,29 @@ public class DBItemQuery implements ItemQuery {
 	}
 
 	@Override
-	public boolean updateItem(long itemID, int systemID, String Title) {
+	public boolean updateItem(long itemID, String systemID, String title) {
 		Connection connect = pool.getConnection();
-		String query = "UPDATE awsdb.Items SET SystemID = ?, Title = ? WHERE ItemID = ?";
+		String query = "UPDATE awsdb.Items SET System = ?, Title = ? WHERE ItemID = ?";
 		boolean result = true;
-		
+		PreparedStatement stmt = null;
 		try {
-			PreparedStatement stmt = connect.prepareStatement(query);
-			stmt.setLong(1, itemID);
-			int queryResult = stmt.executeUpdate();
-			
-			//No updates where performed. More than likely ItemID does not exist.
-			if (queryResult == 0)
-				result = false;
+			stmt = connect.prepareStatement(query);
+			stmt.setString(1, systemID);
+			stmt.setString(2, title);
+			stmt.setLong(3, itemID);
+			stmt.executeUpdate();
 			
 			stmt.close();
 			
 		} catch (SQLException e) {
+			//This means there was an error with executing the update, so return false.
 			System.err.println(e.getMessage());
+			result = false;
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		pool.closeConnection(connect);
