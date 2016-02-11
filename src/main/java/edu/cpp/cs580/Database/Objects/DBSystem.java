@@ -1,8 +1,8 @@
 package edu.cpp.cs580.Database.Objects;
 
-import edu.cpp.cs580.Database.Objects.Interfaces.System;
+import edu.cpp.cs580.Database.Objects.Interfaces.Systems;
 
-public class DBSystem implements System {
+public class DBSystem implements Systems {
 	/******************Data Members********************/
 	private String systemID;
 	private String systemName;

@@ -1,6 +1,6 @@
 package edu.cpp.cs580.Database.Queries.Interface;
 
-import edu.cpp.cs580.Database.Objects.Interfaces.System;
+import edu.cpp.cs580.Database.Objects.Interfaces.Systems;
 
 public interface SystemQuery {
 	/**
@@ -8,13 +8,13 @@ public interface SystemQuery {
 	 * @param system	System to add
 	 * @return			True if addition is successful, false otherwise
 	 */
-	public boolean addSystem(System system);
+	public boolean addSystem(Systems system);
 	/**
 	 * Get system from the given systemID.
 	 * @param systemID	SystemID of system
 	 * @return			System object or NULL if not found
 	 */
-	public System getSystem(String systemID);
+	public Systems getSystem(String systemID);
 	/**
 	 * Remove the system from the given systemID
 	 * @param systemID	SystemID of system
@@ -26,5 +26,5 @@ public interface SystemQuery {
 	 * @param system	System to update
 	 * @return			True if update is successful, false otherwise
 	 */
-	public boolean updateSystem(System system);
+	public boolean updateSystem(Systems system);
 }
