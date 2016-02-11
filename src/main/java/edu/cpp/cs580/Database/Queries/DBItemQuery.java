@@ -67,7 +67,6 @@ public class DBItemQuery implements ItemQuery {
 				String resTitle = queryResult.getString("Title"),
 					   resSystemID = queryResult.getString("System");
 				long resItemID = queryResult.getLong("ItemID");
-				System.err.println(resTitle + " " + resSystemID + " " + resItemID);
 				result = new DBItem(resItemID, resSystemID, resTitle);
 			}
 			
@@ -101,11 +100,9 @@ public class DBItemQuery implements ItemQuery {
 				String resTitle = queryResult.getString("Title"),
 					   resSystemID = queryResult.getString("System");
 				long resItemID = queryResult.getLong("ItemID");
-				
-				System.err.println(resTitle + " " + resSystemID + " " + resItemID);
 				result.put(resItemID, new DBItem(resItemID, resSystemID, resTitle));
 			}
-			
+			queryResult.close();
 			stmt.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
@@ -137,7 +134,6 @@ public class DBItemQuery implements ItemQuery {
 				stmt.executeUpdate();
 			}
 			else {
-				verifyResult.close();
 				result = false;
 			}
 			
