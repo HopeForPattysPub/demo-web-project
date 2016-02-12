@@ -27,5 +27,5 @@ public interface StoreQuery {
 	 * @param storeID	StoreID of store
 	 * @return			True if update is successful, false otherwise
 	 */
-	public boolean updateStore(int storeID);
+	public boolean updateStore(Store store);
 }
