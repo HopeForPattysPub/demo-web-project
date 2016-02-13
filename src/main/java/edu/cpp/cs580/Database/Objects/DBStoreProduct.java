@@ -1,13 +1,12 @@
 package edu.cpp.cs580.Database.Objects;
 
-import java.math.BigInteger;
-import java.util.Date;
+import java.sql.Date;
 
 import edu.cpp.cs580.Database.Objects.Interfaces.StoreProduct;
 
 public class DBStoreProduct implements StoreProduct {
 	/******************Data Members********************/
-	private BigInteger itemID;
+	private long itemID;
 	private double price;
 	private Date priceDate;
 	private int storeID;
@@ -19,7 +18,7 @@ public class DBStoreProduct implements StoreProduct {
 	 * Creates a default user with nothing initialized.
 	 */
 	public DBStoreProduct() {
-		itemID = null;
+		itemID = 0;
 		price = 0;
 		priceDate = null;
 		storeID = 0;
@@ -36,7 +35,7 @@ public class DBStoreProduct implements StoreProduct {
 	 * @param stPrID	Product ID used by store for item
 	 * @param ur	Item URL in store
 	 */
-	public DBStoreProduct(BigInteger itID, double pr, Date pd, int stID, String stPrID, String ur) {
+	public DBStoreProduct(long itID, double pr, Date pd, int stID, String stPrID, String ur) {
 		itemID = itID;
 		price = pr;
 		priceDate = pd;
@@ -46,7 +45,7 @@ public class DBStoreProduct implements StoreProduct {
 	}
 	/******************Methods************************/
 	@Override
-	public BigInteger getItemID() {
+	public long getItemID() {
 		return itemID;
 	}
 
@@ -76,7 +75,7 @@ public class DBStoreProduct implements StoreProduct {
 	}
 
 	@Override
-	public void setItemID(BigInteger id) {
+	public void setItemID(long id) {
 		itemID = id;
 	}
 
