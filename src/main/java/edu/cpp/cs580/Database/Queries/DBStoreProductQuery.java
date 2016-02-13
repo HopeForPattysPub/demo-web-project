@@ -154,7 +154,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 	public boolean removeStoreProduct(int storeID, long itemID) {
 		Connection connect = pool.getConnection();
 		String removeQuery = "DELETE FROM awsdb.StoreProducts WHERE StoreID = ? AND ItemID = ?",
-			   verifyQuery = "SELECT * FROM awsdb.StoreProducts WHERE StoreID = ? AND ItemID = ?";
+			   verifyQuery = "SELECT EXISTS(SELECT 1 FROM awsdb.StoreProducts WHERE StoreID = ? AND ItemID = ?)";
 		boolean result = true;
 		PreparedStatement stmt = null;
 		
@@ -165,7 +165,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 			stmt.setLong(2, itemID);
 			ResultSet rs = stmt.executeQuery();
 			
-			if (rs.next()) {
+			if (rs.next() && rs.getInt(1) == 1) {
 				stmt.close();
 				
 				//Remove product

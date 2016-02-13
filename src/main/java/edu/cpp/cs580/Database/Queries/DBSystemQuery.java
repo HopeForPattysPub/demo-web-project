@@ -83,7 +83,7 @@ public class DBSystemQuery implements SystemQuery {
 			stmt.setString(1, systemID);
 			ResultSet rs = stmt.executeQuery();
 			
-			if (rs.next()) {
+			if (rs.next() && rs.getInt(1) == 1) {
 				stmt.close();
 				
 				//Delete the System

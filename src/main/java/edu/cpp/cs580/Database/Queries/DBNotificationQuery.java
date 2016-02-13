@@ -171,8 +171,8 @@ public class DBNotificationQuery implements NotificationQuery {
 	@Override
 	public boolean removeNotification(String username, long itemID) {
 		Connection connect = pool.getConnection();
-		String resultQuery = "DELETE FROM awsdb.Notifications WHERE Username = ?, ItemID = ?",
-			   verifyQuery = "SELECT * FROM awsdb.Notifications WHERE Username = ?, ItemID = ?";
+		String resultQuery = "DELETE FROM awsdb.Notifications WHERE Username = ? AND ItemID = ?",
+			   verifyQuery = "SELECT EXISTS(SELECT 1 FROM awsdb.Notifications WHERE Username = ? AND ItemID = ?)";
 		boolean result = true;
 		PreparedStatement stmt = null;
 		
@@ -183,7 +183,7 @@ public class DBNotificationQuery implements NotificationQuery {
 			stmt.setLong(2, itemID);
 			ResultSet rs = stmt.executeQuery();
 			
-			if (rs.next()) {
+			if (rs.next() && rs.getInt(1) == 1) {
 				stmt.close();
 				
 				//Delete the notification

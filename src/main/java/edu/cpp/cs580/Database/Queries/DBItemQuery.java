@@ -126,7 +126,7 @@ public class DBItemQuery implements ItemQuery {
 			ResultSet verifyResult = stmt.executeQuery();
 			
 			//verifyResult will have 1 row if the item exists, so can continue with delete
-			if (verifyResult.next()) {
+			if (verifyResult.next() && verifyResult.getInt(1) == 1) {
 				stmt.close();
 				
 				stmt = connect.prepareStatement(removeQuery);

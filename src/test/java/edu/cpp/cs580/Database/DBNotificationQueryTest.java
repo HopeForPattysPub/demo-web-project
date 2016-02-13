@@ -43,5 +43,9 @@ public class DBNotificationQueryTest {
 		//Get items which are ready to send off notifications
 		List<Notification> list = nq.getFulfilledNotifications();
 		Assert.assertEquals("test", list.get(0).getUsername());
+		
+		//Remove notification
+		result = nq.removeNotification("test", 1);
+		Assert.assertEquals(true, result);
 	}
 }

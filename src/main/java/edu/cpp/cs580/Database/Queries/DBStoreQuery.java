@@ -125,7 +125,7 @@ public class DBStoreQuery implements StoreQuery {
 			ResultSet rs = stmt.executeQuery();
 			
 			//StoreId exists, now remove it
-			if (rs.next()) {
+			if (rs.next() && rs.getInt(1) == 1) {
 				stmt.close();
 				
 				stmt = connect.prepareStatement(removeQuery);
