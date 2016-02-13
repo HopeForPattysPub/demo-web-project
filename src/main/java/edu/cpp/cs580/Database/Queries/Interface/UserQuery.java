@@ -7,9 +7,9 @@ public interface UserQuery {
 	 * Add a user to the Database. Username and email must be unique, and the password is already
 	 * hashed.
 	 * @param newUser	New user which will be added
-	 * @return			True if new user is added, false otherwise.
+	 * @return			0 if username exists, 1 if email exists, 2 if successful
 	 */
-	public boolean addUser(User newUser);
+	public int addUser(User newUser);
 	/**
 	 * Get the user given a username or email. Should use email whenever possible.
 	 * @param option	Username or email of user to retrieve.
