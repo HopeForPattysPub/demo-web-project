@@ -1,10 +1,8 @@
 package edu.cpp.cs580.Database.Queries.Interface;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import edu.cpp.cs580.Database.Objects.Interfaces.PriceHistory;
-import edu.cpp.cs580.Database.Objects.Interfaces.Store;
 
 public interface PriceHistoryQuery {
 	/**
@@ -20,5 +18,5 @@ public interface PriceHistoryQuery {
 	 * @param itemID	ItemID of item
 	 * @return			List of prices from most recent to oldest.
 	 */
-	public List<PriceHistory> getHistory(int storeID, BigInteger itemID);
+	public List<PriceHistory> getHistory(int storeID, long itemID);
 }

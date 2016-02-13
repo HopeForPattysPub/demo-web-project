@@ -1,13 +1,12 @@
 package edu.cpp.cs580.Database.Objects;
 
-import java.math.BigInteger;
-import java.util.Date;
+import java.sql.Date;
 
 import edu.cpp.cs580.Database.Objects.Interfaces.PriceHistory;
 
 public class DBPriceHistory implements PriceHistory {
 	/******************Data Members********************/
-	private BigInteger itemID;
+	private long itemID;
 	private double price;
 	private Date priceDate;
 	private int storeID;
@@ -17,7 +16,7 @@ public class DBPriceHistory implements PriceHistory {
 	 * Default constructor which initializes data members to 0 or NULL
 	 */
 	public DBPriceHistory() {
-		itemID = null;
+		itemID = 0;
 		price = 0;
 		priceDate = null;
 		storeID = 0;
@@ -30,7 +29,7 @@ public class DBPriceHistory implements PriceHistory {
 	 * @param pd	Date price retrieved
 	 * @param strID	Store ID from which price was retrieved
 	 */
-	public DBPriceHistory(BigInteger itID, double pr, Date pd, int strID) {
+	public DBPriceHistory(long itID, double pr, Date pd, int strID) {
 		itemID = itID;
 		price = pr;
 		priceDate = pd;
@@ -38,7 +37,7 @@ public class DBPriceHistory implements PriceHistory {
 	}
 	/******************Methods************************/
 	@Override
-	public BigInteger getItemID() {
+	public long getItemID() {
 		return itemID;
 	}
 
@@ -58,7 +57,7 @@ public class DBPriceHistory implements PriceHistory {
 	}
 
 	@Override
-	public void setItemID(BigInteger id) {
+	public void setItemID(long id) {
 		itemID = id;
 	}
 
