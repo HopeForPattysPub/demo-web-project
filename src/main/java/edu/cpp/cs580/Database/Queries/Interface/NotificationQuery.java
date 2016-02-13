@@ -1,6 +1,5 @@
 package edu.cpp.cs580.Database.Queries.Interface;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +19,19 @@ public interface NotificationQuery {
 	 * @param itemID	ItemID of item
 	 * @return			Notification object or NULL if none is found
 	 */
-	public Notification getNotice(String username, BigInteger itemID);
+	public Notification getNotice(String username, long itemID);
 	/**
 	 * Get multiple notifications for a given user. May be zero or more depending on query results.
 	 * @param username	Username of user
 	 * @return			A map with all notifications for a single user. Key will be itemID
 	 */
-	public Map<BigInteger, Notification> getNotifications(String username);
+	public Map<Long, Notification> getNotifications(String username);
 	/**
 	 * Get multiple notifications for a given item. May be zero or more depending on query results.
 	 * @param itemID	ItemID of item
 	 * @return			A map with all notifications for a single item. Key will be username.
 	 */
-	public Map<String, Notification> getNotifications(BigInteger itemID);
+	public Map<String, Notification> getNotifications(long itemID);
 	/**
 	 * Gets a list of all notifications which are ready to be sent out. These notifications are at or
 	 * below their notify price.
@@ -45,7 +44,7 @@ public interface NotificationQuery {
 	 * @param itemID	ItemID of item
 	 * @return			True if removal is successful, false otherwise.
 	 */
-	public boolean removeNotification(String username, BigInteger itemID);
+	public boolean removeNotification(String username, long itemID);
 	/**
 	 * Updates a given notification. Only the current price and notification price may be updated.
 	 * @param notice	Notification which will be updated

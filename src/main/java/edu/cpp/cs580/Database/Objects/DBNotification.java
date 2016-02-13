@@ -1,13 +1,11 @@
 package edu.cpp.cs580.Database.Objects;
 
-import java.math.BigInteger;
-
 import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
 
 public class DBNotification implements Notification {
 	/******************Data Members********************/
 	private double currentPrice;
-	private BigInteger itemID;
+	private long itemID;
 	private double notifyPrice;
 	private String username;
 	
@@ -17,7 +15,7 @@ public class DBNotification implements Notification {
 	 */
 	public DBNotification() {
 		currentPrice = 0;
-		itemID = null;
+		itemID = 0;
 		notifyPrice = 0;
 		username = null;
 	}
@@ -29,7 +27,7 @@ public class DBNotification implements Notification {
 	 * @param np	Item price before sending notification
 	 * @param name	Username of user which created notification
 	 */
-	public DBNotification(double cp, BigInteger id, double np, String name) {
+	public DBNotification(double cp, long id, double np, String name) {
 		currentPrice = cp;
 		itemID = id;
 		notifyPrice = np;
@@ -42,7 +40,7 @@ public class DBNotification implements Notification {
 	}
 
 	@Override
-	public BigInteger getItemID() {
+	public long getItemID() {
 		return itemID;
 	}
 
@@ -62,7 +60,7 @@ public class DBNotification implements Notification {
 	}
 
 	@Override
-	public void setItemID(BigInteger id) {
+	public void setItemID(long id) {
 		itemID = id;
 	}
 
