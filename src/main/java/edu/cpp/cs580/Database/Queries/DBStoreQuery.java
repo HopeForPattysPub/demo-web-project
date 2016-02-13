@@ -80,6 +80,37 @@ public class DBStoreQuery implements StoreQuery {
 	}
 
 	@Override
+	public Store getStore(String storeName) {
+		Connection connect = pool.getConnection();
+		String query = "SELECT * FROM awsdb.Stores WHERE StoreName = ?";
+		Store result = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = connect.prepareStatement(query);
+			stmt.setString(1, storeName);
+			ResultSet rs = stmt.executeQuery();
+			
+			//If there is a result, then save it into a Store item
+			if (rs.next()) {
+				String name = rs.getString("StoreName"),
+					   page = rs.getString("WebPage");
+				int id = rs.getInt("StoreID");
+				result = new DBStore(id, name, page);
+			}
+			
+			//Close to prevent resource leak
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		pool.closeConnection(connect);
+		return result;
+	}
+	
+	@Override
 	public boolean removeStore(int storeID) {
 		Connection connect = pool.getConnection();
 		String removeQuery = "DELETE FROM awsdb.Stores WHERE StoreID = ?",
@@ -154,7 +185,7 @@ public class DBStoreQuery implements StoreQuery {
 	 * @return	New calculated itemID
 	 */
 	private int calculateStoreID() {
-		String query = "SELECT StoreID FROM awsdb.Store ORDER BY StoreID DESC LIMIT 1";
+		String query = "SELECT StoreID FROM awsdb.Stores ORDER BY StoreID DESC LIMIT 1";
 		
 		Connection connect = pool.getConnection();
 		int storeID;

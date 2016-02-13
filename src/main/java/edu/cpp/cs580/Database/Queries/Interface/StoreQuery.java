@@ -17,6 +17,12 @@ public interface StoreQuery {
 	 */
 	public Store getStore(int storeID);
 	/**
+	 * Get the store from the given store name
+	 * @param storeName	Store name
+	 * @return			Store object or NULL if none exists
+	 */
+	public Store getStore(String storeName);
+	/**
 	 * Remove the given store
 	 * @param storeID	StoreID of store
 	 * @return			True if removal is successful, false otherwise
