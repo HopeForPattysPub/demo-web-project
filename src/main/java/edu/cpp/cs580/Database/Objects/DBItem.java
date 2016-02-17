@@ -9,7 +9,6 @@ public class DBItem implements Item {
 	private String title;
 	
 	/******************Constructors*******************/
-	
 	/**
 	 * Default constructor. Will initialize all data members to NULL
 	 */
