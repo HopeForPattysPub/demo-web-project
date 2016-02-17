@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 
-public class DBNotificationQueryTest {
+public class DBNotificationQueryTestDisabled {
 	@Test
 	public void notificationTest() {
 		NotificationQuery nq = new DBNotificationQuery();

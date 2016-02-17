@@ -12,6 +12,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.test.failure.ignore>true</maven.test.failure.ignore>
+		<start-class>edu.cpp.cs580.App</start-class>
 	</properties>
 
 	<parent>

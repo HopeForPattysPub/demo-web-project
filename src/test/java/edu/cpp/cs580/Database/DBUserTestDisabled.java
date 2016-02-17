@@ -7,7 +7,7 @@ import edu.cpp.cs580.Database.Objects.Interfaces.User;
 
 import org.junit.Assert;
 
-public class DBUserTest {
+public class DBUserTestDisabled {
 	@Test
 	public void testDBUserInitalizedConstructor() {
 		String u = "Test",

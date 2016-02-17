@@ -8,7 +8,7 @@ import edu.cpp.cs580.Database.Queries.DBUserQuery;
 import edu.cpp.cs580.Database.Queries.Interface.UserQuery;
 import org.junit.Assert;
 
-public class DBUserQueryTest {
+public class DBUserQueryTestDisabled {
 	@Test
 	public void userQueryTest() {
 		UserQuery uq = new DBUserQuery();

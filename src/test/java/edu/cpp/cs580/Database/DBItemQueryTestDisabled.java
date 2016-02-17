@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 
-public class DBItemQueryTest {
+public class DBItemQueryTestDisabled {
 	@Test
 	public void addItemTest() {
 		//Attempt to add a new item

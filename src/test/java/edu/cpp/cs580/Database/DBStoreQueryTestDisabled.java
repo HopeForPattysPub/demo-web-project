@@ -7,7 +7,7 @@ import edu.cpp.cs580.Database.Queries.DBStoreQuery;
 import edu.cpp.cs580.Database.Queries.Interface.StoreQuery;
 import org.junit.Assert;
 
-public class DBStoreQueryTest {
+public class DBStoreQueryTestDisabled {
 	@Test
 	public void addItemTest() {
 		StoreQuery sq = new DBStoreQuery();

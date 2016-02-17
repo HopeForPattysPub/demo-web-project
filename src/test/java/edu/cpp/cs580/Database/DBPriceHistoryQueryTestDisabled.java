@@ -11,7 +11,7 @@ import edu.cpp.cs580.Database.Queries.DBPriceHistoryQuery;
 import edu.cpp.cs580.Database.Queries.Interface.PriceHistoryQuery;
 import org.junit.Assert;
 
-public class DBPriceHistoryQueryTest {
+public class DBPriceHistoryQueryTestDisabled {
 	@Test
 	public void priceHistoryTest() {
 		PriceHistoryQuery phq = new DBPriceHistoryQuery();
