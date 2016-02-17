@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 import org.junit.Assert;
 
-public class DBSConnectionPoolTest {
+public class DBSConnectionPoolTestDisabled {
 	@Test
 	public void testGetInstance() {
 		DBConnectionPool test = DBConnectionPool.getInstance();
