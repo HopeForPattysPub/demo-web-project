@@ -1,0 +1,36 @@
+<html ng-app="UserLanding">
+	<!-- This page uses AngularJS -->
+	<head>
+	    <title>Steam Parsing Test</title>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
+	    <script src="/js/userLanding.js"></script>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	</head>
+
+	<body ng-controller="UserLandingPage">
+
+	    <hr>
+
+	    <div>
+	        <div>
+	            <label>Welcome!</label>
+	        </div>
+
+	        <hr>
+
+	        <div>
+	            <b><label>Steam JSON Parsing Test</label></b>
+	            <br>
+<!-- 	            Use the following link, replacing the {appid} with the Steam Game ID: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>http://store.steampowered.com/api/appdetails?appids=</i>{appid}<br>   -->
+					Enter the AppID (Game ID) of the game to parse the JSON for the given game.
+	            <br>
+	            <input type="text" id="appid" ng-model="appidToSearch"><button ng-click="parseUser()">Get</button>
+	            <br><hr><br>
+				<p ng-bind-html="pageOutput"></p>
+	        </div>
+	    </div>
+
+	</body>
+
+</html>

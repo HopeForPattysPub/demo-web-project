@@ -94,6 +94,11 @@ public class WebController {
 		return user;
 	}
 
+	@RequestMapping(value = "/{userName}/userLanding", method = RequestMethod.GET)
+	String geUserName(@PathVariable("userName") String UN) {
+		return UN;
+	}
+	
 	/**
 	 * This is an example of sending an HTTP POST request to
 	 * update a user's information (or create the user if not
