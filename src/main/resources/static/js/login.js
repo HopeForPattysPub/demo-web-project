@@ -31,16 +31,7 @@ LoginScreen.controller('loginInfoPage', function ($scope, $http) {
                }
                else if (data == 1)
                {
-                  alert("Login successful");
-                  $http.get("http://localhost:8080/" + un + "/userLanding")
-                  
-                     .success(function(data) {
-                        alert("User Name is: data");
-                     });
-                     .error(function(data,status) {
-                        $scope.pageOutput = "Error";
-                     });
-                  //window.location.href = ("http://localhost:8080/" + un + "/userLanding");
+                  window.location.replace("http://localhost:8080/userLanding.html?userName=" + un);
                }
               
             })

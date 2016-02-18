@@ -6,7 +6,7 @@ SteamParseTest.controller('SteamInfoPage', function ($scope, $http) {
   
   $scope.parseSteamJSON = function() {
      alert("Entered in function");
-     /*$http.get("/parser/steam/" + $scope.appidToSearch, {headers: { 'Accept': 'application/html' }})
+     $http.get("/parser/steam/" + $scope.appidToSearch, {headers: { 'Accept': 'application/html' }})
 	  	.success(function(data) {
 	  		$scope.pageOutput = data;
 	  		//368500 - Assassin's Creed appid
@@ -14,7 +14,7 @@ SteamParseTest.controller('SteamInfoPage', function ($scope, $http) {
 	  	})
 	  	.error(function(data,status) {
 	  		$scope.pageOutput = 'Error';
-	  	});*/
+	  	});
   }
 
 });
