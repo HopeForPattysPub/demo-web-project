@@ -88,7 +88,7 @@ public class DBItemQuery implements ItemQuery {
 		if (option.equalsIgnoreCase("Title"))
 			query = "SELECT * FROM awsdb.Items WHERE Title = ?";
 		else
-			query = "SELECT * FROM awsdb.Items WHERE SystemID = ?";
+			query = "SELECT * FROM awsdb.Items WHERE System = ?";
 		
 		try {
 			PreparedStatement stmt = connect.prepareStatement(query);
