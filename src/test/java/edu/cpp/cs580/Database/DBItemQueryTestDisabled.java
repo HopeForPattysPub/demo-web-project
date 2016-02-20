@@ -6,6 +6,7 @@ import edu.cpp.cs580.Database.Objects.Interfaces.Item;
 import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.Interface.ItemQuery;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -24,13 +25,17 @@ public class DBItemQueryTestDisabled {
 		Assert.assertEquals(false, result);
 		
 		//Get single item
-		Item item = it.getItem(1);
-		Assert.assertEquals("Test", item.getTitle());
-		Assert.assertEquals("XBOX360", item.getSystem());
+		//Item item = it.getItem(1);
+		//Assert.assertEquals("Test", item.getTitle());
+		//Assert.assertEquals("XBOX360", item.getSystem());
 		
 		//Get multiple items
 		Map<Long, Item> map = it.getItems("Title", "Test");
-		Assert.assertEquals(1, map.size());
+		//Assert.assertEquals(1, map.size());
+		
+		//Search
+		List<Item> list = it.searchTitle("test");
+		System.err.println(list.size());
 		
 		//Remove item
 		result = it.removeItem(1);

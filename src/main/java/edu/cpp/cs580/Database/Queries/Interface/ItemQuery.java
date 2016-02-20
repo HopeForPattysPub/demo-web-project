@@ -1,5 +1,6 @@
 package edu.cpp.cs580.Database.Queries.Interface;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.cpp.cs580.Database.Objects.Interfaces.Item;
@@ -26,6 +27,12 @@ public interface ItemQuery {
 	 * @return			A map object storing the results. The key is the itemID.
 	 */
 	public Map<Long, Item> getItems(String option, String value);
+	/**
+	 * Search for a title. The list will be sorted from the most likely item, to the least.
+	 * @param title	Title to search for
+	 * @return		List of items sorted from most likely to least.
+	 */
+	public List<Item> searchTitle(String title);
 	/**
 	 * Remove an item from the Database
 	 * @param itemID	ItemID of the item

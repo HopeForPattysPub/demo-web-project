@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.cpp.cs580.Database.DBConnectionPool;
@@ -208,5 +210,46 @@ public class DBItemQuery implements ItemQuery {
 		pool.closeConnection(connect);
 		
 		return itemID;
+	}
+
+	@Override
+	public List<Item> searchTitle(String title) {
+		Connection searchConnect = pool.getConnection();
+		String searchQuery = "SELECT Title, ItemID, LEVENSHTEIN(Title, ?) AS distance FROM awsdb.Items WHERE Title Like ? ORDER BY distance ASC",
+			   retrieveQuery = "SELECT * FROM awsdb.Items WHERE ItemID = ?";
+		List<Item> result = new ArrayList<Item>();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = searchConnect.prepareStatement(searchQuery);
+			stmt.setString(1, title);
+			stmt.setString(2, "%" + title + "%");
+			ResultSet searchRS = stmt.executeQuery();
+			
+			Connection retrieveConnect = pool.getConnection();
+			while (searchRS.next()) {
+				PreparedStatement resultStmt = retrieveConnect.prepareStatement(retrieveQuery);
+				resultStmt.setLong(1, searchRS.getLong("ItemID"));
+				ResultSet rs = resultStmt.executeQuery();
+				rs.next();
+				String tle = rs.getString("Title"),
+					   system = rs.getString("System");
+				long id = rs.getLong("ItemID");
+				result.add(new DBItem(id, system, tle));
+				
+				//Clean up resources
+				rs.close();
+			}
+			
+			//Clean up resources
+			pool.closeConnection(retrieveConnect);
+			searchRS.close();
+			stmt.close();			
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		pool.closeConnection(searchConnect);
+		return result;
 	}
 }
