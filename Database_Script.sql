@@ -55,7 +55,7 @@ CREATE TABLE StoreProducts
 CREATE TABLE PriceHistory
 (	ItemID BIGINT NOT NULL
 	, StoreID INTEGER UNSIGNED NOT NULL
-    , PriceDate TIMESTAMP NOT NULL
+    , PriceDate DATE NOT NULL
     , Price DECIMAL(10, 2) NOT NULL
     , PRIMARY KEY (ItemID, PriceDate, StoreID)
     , FOREIGN KEY (StoreID) REFERENCES Stores(StoreID)
