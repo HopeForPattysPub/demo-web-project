@@ -1,6 +1,7 @@
 package edu.cpp.cs580.Database;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Map;
 
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class DBStoreProductQueryTestDisabled {
 		StoreProductQuery spq = new DBStoreProductQuery();
 		
 		//Add item
-		StoreProduct product = new DBStoreProduct((long)1, 50.00, new Date(System.currentTimeMillis()), 1, "1", "http://example.com/item");
+		StoreProduct product = new DBStoreProduct((long)1, 50.00, new Timestamp(System.currentTimeMillis()), 1, "1", "http://example.com/item");
 		boolean result = spq.addStoreProduct(product);
 		Assert.assertEquals(true, result);
 		
@@ -34,7 +35,7 @@ public class DBStoreProductQueryTestDisabled {
 		Assert.assertEquals(1, map2.get(1).getStoreID());
 		
 		//Update a store product
-		product = new DBStoreProduct((long)1, 20.00, new Date(System.currentTimeMillis()), 1, "1", "http://example.com/item");
+		product = new DBStoreProduct((long)1, 20.00, new Timestamp(System.currentTimeMillis()), 1, "1", "http://example.com/item");
 		result = spq.updateStoreProduct(product);
 		Assert.assertEquals(true, result);
 		

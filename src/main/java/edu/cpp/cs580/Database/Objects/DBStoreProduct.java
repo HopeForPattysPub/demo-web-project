@@ -1,6 +1,6 @@
 package edu.cpp.cs580.Database.Objects;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import edu.cpp.cs580.Database.Objects.Interfaces.StoreProduct;
 
@@ -8,7 +8,7 @@ public class DBStoreProduct implements StoreProduct {
 	/******************Data Members********************/
 	private long itemID;
 	private double price;
-	private Date priceDate;
+	private Timestamp priceDate;
 	private int storeID;
 	private String storeProductID;
 	private String url;
@@ -35,7 +35,7 @@ public class DBStoreProduct implements StoreProduct {
 	 * @param stPrID	Product ID used by store for item
 	 * @param ur	Item URL in store
 	 */
-	public DBStoreProduct(long itID, double pr, Date pd, int stID, String stPrID, String ur) {
+	public DBStoreProduct(long itID, double pr, Timestamp pd, int stID, String stPrID, String ur) {
 		itemID = itID;
 		price = pr;
 		priceDate = pd;
@@ -55,7 +55,7 @@ public class DBStoreProduct implements StoreProduct {
 	}
 
 	@Override
-	public Date getPriceDate() {
+	public Timestamp getPriceDate() {
 		return priceDate;
 	}
 
@@ -85,7 +85,7 @@ public class DBStoreProduct implements StoreProduct {
 	}
 
 	@Override
-	public void setPriceDate(Date date) {
+	public void setPriceDate(Timestamp date) {
 		priceDate = date;
 	}
 

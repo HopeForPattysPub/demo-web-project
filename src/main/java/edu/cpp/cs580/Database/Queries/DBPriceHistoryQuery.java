@@ -80,4 +80,31 @@ public class DBPriceHistoryQuery implements PriceHistoryQuery {
 		return result;
 	}
 
+	@Override
+	public Date getRecentDate(int storeID, long itemID) {
+		Connection connect = pool.getConnection();
+		String query = "SELECT PriceDate FROM awsdb.PriceHistory WHERE StoreID = ? AND ItemID = ? ORDER BY PriceDate DESC LIMIT 1";
+		Date result = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = connect.prepareStatement(query);
+			stmt.setInt(1, storeID);
+			stmt.setLong(2, itemID);
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				result = rs.getDate("PriceDate");
+			}
+			
+			//Close resources
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		pool.closeConnection(connect);
+		return result;
+	}
 }

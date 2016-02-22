@@ -1,10 +1,10 @@
 package edu.cpp.cs580.Database.Queries;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 			stmt.setLong(2, newProduct.getItemID());
 			stmt.setString(3, newProduct.getStoreProductID());
 			stmt.setDouble(4, newProduct.getPrice());
-			stmt.setDate(5, newProduct.getPriceDate());
+			stmt.setTimestamp(5, newProduct.getPriceDate());
 			stmt.setString(6, newProduct.getURL());
 			stmt.executeUpdate();
 			stmt.close();
@@ -69,7 +69,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 				String spID = rs.getString("StoreProductID"),
 					   url = rs.getString("URL");
 				double price = rs.getDouble("Price");
-				Date date = rs.getDate("PriceDate");
+				Timestamp date = rs.getTimestamp("PriceDate");
 				
 				result = new DBStoreProduct(itmID, price, date, strID, spID, url);
 			}
@@ -102,7 +102,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 				String spID = rs.getString("StoreProductID"),
 					   url = rs.getString("URL");
 				double price = rs.getDouble("Price");
-				Date date = rs.getDate("PriceDate");
+				Timestamp date = rs.getTimestamp("PriceDate");
 				
 				result.put(itmID, new DBStoreProduct(itmID, price, date, strID, spID, url));
 			}
@@ -135,7 +135,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 				String spID = rs.getString("StoreProductID"),
 					   url = rs.getString("URL");
 				double price = rs.getDouble("Price");
-				Date date = rs.getDate("PriceDate");
+				Timestamp date = rs.getTimestamp("PriceDate");
 				
 				result.put(strID, new DBStoreProduct(itmID, price, date, strID, spID, url));
 			}
@@ -207,7 +207,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 			stmt.setLong(6, product.getItemID());
 			stmt.setString(1, product.getStoreProductID());
 			stmt.setDouble(2, product.getPrice());
-			stmt.setDate(3, product.getPriceDate());
+			stmt.setTimestamp(3, product.getPriceDate());
 			stmt.setString(4, product.getURL());
 			stmt.executeUpdate();
 			stmt.close();

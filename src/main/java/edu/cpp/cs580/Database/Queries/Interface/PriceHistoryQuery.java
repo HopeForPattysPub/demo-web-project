@@ -1,5 +1,6 @@
 package edu.cpp.cs580.Database.Queries.Interface;
 
+import java.sql.Date;
 import java.util.List;
 
 import edu.cpp.cs580.Database.Objects.Interfaces.PriceHistory;
@@ -19,4 +20,12 @@ public interface PriceHistoryQuery {
 	 * @return			List of prices from most recent to oldest.
 	 */
 	public List<PriceHistory> getHistory(int storeID, long itemID);
+	
+	/**
+	 * Get the most recent date/time for the given StoreID and ItemID
+	 * @param storeID	StoreID of store
+	 * @param itemID	ItemID of item
+	 * @return			Most recent date for given store item
+	 */
+	public Date getRecentDate(int storeID, long itemID);
 }

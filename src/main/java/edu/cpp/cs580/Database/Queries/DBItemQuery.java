@@ -214,21 +214,20 @@ public class DBItemQuery implements ItemQuery {
 
 	@Override
 	public List<Item> searchTitle(String title) {
-		Connection searchConnect = pool.getConnection();
+		Connection connect = pool.getConnection();
 		String searchQuery = "SELECT Title, ItemID, LEVENSHTEIN(Title, ?) AS distance FROM awsdb.Items WHERE Title Like ? ORDER BY distance ASC",
 			   retrieveQuery = "SELECT * FROM awsdb.Items WHERE ItemID = ?";
 		List<Item> result = new ArrayList<Item>();
 		PreparedStatement stmt = null;
 		
 		try {
-			stmt = searchConnect.prepareStatement(searchQuery);
+			stmt = connect.prepareStatement(searchQuery);
 			stmt.setString(1, title);
 			stmt.setString(2, "%" + title + "%");
 			ResultSet searchRS = stmt.executeQuery();
 			
-			Connection retrieveConnect = pool.getConnection();
 			while (searchRS.next()) {
-				PreparedStatement resultStmt = retrieveConnect.prepareStatement(retrieveQuery);
+				PreparedStatement resultStmt = connect.prepareStatement(retrieveQuery);
 				resultStmt.setLong(1, searchRS.getLong("ItemID"));
 				ResultSet rs = resultStmt.executeQuery();
 				rs.next();
@@ -239,17 +238,17 @@ public class DBItemQuery implements ItemQuery {
 				
 				//Clean up resources
 				rs.close();
+				resultStmt.close();
 			}
 			
 			//Clean up resources
-			pool.closeConnection(retrieveConnect);
 			searchRS.close();
 			stmt.close();			
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		
-		pool.closeConnection(searchConnect);
+		pool.closeConnection(connect);
 		return result;
 	}
 }
