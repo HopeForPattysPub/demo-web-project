@@ -235,4 +235,35 @@ public class DBNotificationQuery implements NotificationQuery {
 		return result;
 	}
 
+	@Override
+	public List<Notification> getNotifications2(String username) {
+		Connection connect = pool.getConnection();
+		String query = "SELECT * FROM awsdb.Notifications WHERE Username = ?";
+		List<Notification> result = new ArrayList<Notification>();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = connect.prepareStatement(query);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				String name = rs.getString("Username");
+				long id = rs.getLong("ItemID");
+				double curPrice = rs.getDouble("CurrentPrice"),
+					   notifyPrice= rs.getDouble("NotifyPrice");
+				
+				result.add(new DBNotification(curPrice, id, notifyPrice, name));
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		pool.closeConnection(connect);
+		return result;
+	}
+
 }

@@ -7,7 +7,18 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
   
   $scope.welcomeUser = function() {
      document.getElementById("Welcome").innerHTML = ("Welcome, " + UN[1]);
-  }
+     alert("in welcome");
+     
+       
+      $http.get("/getUserNotifications/" + UN[1])
+      .success(function(data){
+         alert("finished");
+         $scope.items = data;
+      });
+
+            
+     
+   }
   
   
   $scope.parseUser = function() {

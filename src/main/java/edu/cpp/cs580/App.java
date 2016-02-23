@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
 import edu.cpp.cs580.data.provider.FSUserManager;
 import edu.cpp.cs580.data.provider.UserManager;
 
@@ -26,6 +27,12 @@ public class App {
         return userManager;
     }
 
+    @Bean
+    public DBNotificationQuery dbNotificationQuery() {
+   	 DBNotificationQuery dbNotificationQuery  = new DBNotificationQuery();
+        return dbNotificationQuery;
+    }
+    
     /**
      * This is the running main method for the web application.
      * Please note that Spring requires that there is one and

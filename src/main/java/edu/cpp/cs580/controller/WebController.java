@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,12 +22,16 @@ import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 import com.google.common.net.HostAndPort;
 import com.google.common.net.HostSpecifier;
+import com.google.gson.Gson;
 
 import edu.cpp.cs580.App;
+import edu.cpp.cs580.Database.Objects.DBNotification;
+import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
 import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
 import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
 import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
+import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
 
 
 import java.sql.DriverManager;
@@ -60,7 +65,10 @@ public class WebController {
 	 * the {@link App} class.
 	 */
 	@Autowired
-	private UserManager userManager;	
+	private UserManager userManager;
+	
+	@Autowired
+	private DBNotificationQuery dbNotificationQuery;
 
 	/**
 	 * This is a simple example of how the HTTP API works.
@@ -94,10 +102,20 @@ public class WebController {
 		return user;
 	}
 
-	/*@RequestMapping(value = "/{userName}/userLanding", method = RequestMethod.GET)
-	String geUserName(@PathVariable("userName") String UN) {
-		return UN;
-	}*/
+	@RequestMapping(value = "/getUserNotifications/{userName}", method = RequestMethod.GET)
+	String getNotification(@PathVariable("userName") String userName) {
+		
+		List<Notification> tempResults = dbNotificationQuery.getNotifications2(userName);
+		
+		String results = null;
+		Gson gson = new Gson();
+		String jsonCartList = gson.toJson(tempResults);
+		System.out.println("{\"items\":" + jsonCartList + "}");
+		//results = "{\"items\":" + jsonCartList + "}";
+		results = jsonCartList;
+		return results;
+		
+	}
 	
 	/**
 	 * This is an example of sending an HTTP POST request to

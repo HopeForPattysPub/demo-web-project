@@ -32,6 +32,7 @@ public interface NotificationQuery {
 	 * @return			A map with all notifications for a single item. Key will be username.
 	 */
 	public Map<String, Notification> getNotifications(long itemID);
+	public List<Notification> getNotifications2(String username);
 	/**
 	 * Gets a list of all notifications which are ready to be sent out. These notifications are at or
 	 * below their notify price.

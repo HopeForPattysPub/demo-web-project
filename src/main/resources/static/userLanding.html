@@ -21,9 +21,36 @@
 	        <div id="Welcome">
 	            
 	        </div>
-
+      
 	        <hr>
+            
+            
+           <div>
+               <label>Your Tracked Games</label>
+               <table border="1">
+                   <tr>
+                       <td>Game Name</td>
+                       <td>Retailer</td>
+                       <td>Current Price</td>
+                       <td>Notify Price</td>
+                       <td>Update</td>
+                       <td>Delete</td>
+                   </tr>
 
+                   <tr ng-repeat="item in items">
+                       <td>{{item.username}}</td>
+                       <td>{{item.itemID}}</td>
+                       <td>{{item.currentPrice}}</td>
+                       <td>{{item.notifyPrice}}</td>
+                       <td><button ng-click="updateItem(item.ItemID)">Update</button></td>
+                       <td><button ng-click="deleteItem(item.ItemID)">Delete</button></td>
+                   </tr>
+               </table>
+           </div>
+           
+           <hr> 
+            
+            
 	        <div>
 	            <b><label>Steam JSON Parsing Test</label></b>
 	            <br>
