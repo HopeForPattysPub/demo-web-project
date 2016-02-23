@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class WebPage {
 
-	String pageURL;
-	String rawData;
+	protected String pageURL;
+	protected String rawData;
 	
 	public WebPage(String URL)
 	{
@@ -20,6 +20,8 @@ public class WebPage {
 	}
 	
 	public String getRawPageData() { return rawData; }
+	
+	public String getPageURL() { return pageURL; }
 
 	protected void grabRawData()
 	{

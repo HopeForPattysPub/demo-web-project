@@ -25,7 +25,7 @@ public class SteamQueryPage extends QueryPage {
 	private void parseQueryPage()
 	{
 		try {
-			Document doc = Jsoup.connect(pageURL).timeout(600000).maxBodySize(0)
+			Document doc = Jsoup.connect(getPageURL()).timeout(600000).maxBodySize(0)
 					.userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36").cookie("birthtime", "568022401")
 			        .get();
 			Elements result = doc.select("div#search_result_container").select("a[href]");

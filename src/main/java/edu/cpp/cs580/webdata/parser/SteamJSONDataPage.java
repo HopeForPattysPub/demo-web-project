@@ -102,7 +102,7 @@ public class SteamJSONDataPage extends GameDataPage {
 	
 	public static void main(String[] args) throws ParserNotCompleteException, IOException, ParserNotCompleteException, WebPageInfoNotInitializedException {
 
-		new SteamJSONDataPage("http://store.steampowered.com/api/appdetails?appids=368500/");
+		new SteamJSONDataPage("http://store.steampowered.com/api/appdetails/?appids=368500");
 	}
 
 }

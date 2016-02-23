@@ -8,8 +8,8 @@ public abstract class GameDataPage extends WebPage {
 //	protected Double currentPrice;
 //	protected Map<String, Object> gameAttributes;
 	protected GamePageInfo webPageInfo;
-	protected String rawData;
-	protected String pageURL;
+//	protected String rawData;
+//	protected String pageURL;
 	protected String gameName;
 	
 	public GameDataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException
