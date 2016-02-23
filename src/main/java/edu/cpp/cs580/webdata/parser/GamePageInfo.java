@@ -3,7 +3,7 @@ package edu.cpp.cs580.webdata.parser;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WebPageInfo {
+public class GamePageInfo {
 
 	protected Double currentPrice;
 //	protected String description;
@@ -15,7 +15,7 @@ public class WebPageInfo {
 //		gameAttributes = new HashMap<>();
 //	}
 	
-	public WebPageInfo(double price, Map<String,Object> att)
+	public GamePageInfo(double price, Map<String,Object> att)
 	{
 		currentPrice = price;
 		gameAttributes = att;

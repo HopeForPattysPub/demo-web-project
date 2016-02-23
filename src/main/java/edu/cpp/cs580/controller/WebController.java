@@ -392,7 +392,7 @@ public class WebController {
 		String retString = "";
 		try {
 			edu.cpp.cs580.webdata.parser.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.SteamJSONDataPage(url);
-			edu.cpp.cs580.webdata.parser.WebPageInfo wPI = steamJSONPage.getWebPageInfo();
+			edu.cpp.cs580.webdata.parser.GamePageInfo wPI = steamJSONPage.getWebPageInfo();
 			retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";
 			
 			for(String key : new java.util.TreeSet<String>(wPI.getGameAttributes().keySet())) {

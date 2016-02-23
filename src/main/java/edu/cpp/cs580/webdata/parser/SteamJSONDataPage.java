@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import com.gargoylesoftware.htmlunit.javascript.host.media.rtc.webkitRTCPeerConnection;
 
-public class SteamJSONDataPage extends DataPage {
+public class SteamJSONDataPage extends GameDataPage {
 
 	public SteamJSONDataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException {
 //		super("http://store.steampowered.com/app/368500/");
@@ -29,16 +29,17 @@ public class SteamJSONDataPage extends DataPage {
 		Map<String,Object> gameAttributes = new HashMap<>();
 		URL urlObject;
 		Scanner scan;
-		String str = "";
-		String url = "http://store.steampowered.com/api/appdetails?appids=" + appid;
-		try {			
-			urlObject = new URL(url);
-			scan = new Scanner(urlObject.openStream());
-			while(scan.hasNext()) str+= scan.nextLine();
-			scan.close();
-		} catch (IOException e) { e.printStackTrace(); }
+//		String str = "";
+//		String url = "http://store.steampowered.com/api/appdetails?appids=" + appid;
+//		try {			
+//			urlObject = new URL(url);
+//			scan = new Scanner(urlObject.openStream());
+//			while(scan.hasNext()) str+= scan.nextLine();
+//			scan.close();
+//		} catch (IOException e) { e.printStackTrace(); }
 		
-		JSONObject obj = new JSONObject(str);
+//		JSONObject obj = new JSONObject(str);
+		JSONObject obj = new JSONObject(getRawPageData());
 		if(obj.getJSONObject(""+appid).getBoolean("success") == false) return;
 		JSONObject results = obj.getJSONObject(""+appid).getJSONObject("data");
 		currentPrice = (double)results.getJSONObject("price_overview").getInt("final")/100.0;
@@ -87,10 +88,10 @@ public class SteamJSONDataPage extends DataPage {
 		while(screenIt.hasNext()) screenList.add(((JSONObject)screenIt.next()).getString("path_full"));
 		gameAttributes.put("screenshot_list", screenList);
 		
-		pageURL = url;
-		rawData = str;
+//		pageURL = url;
+//		rawData = str;
 		gameName = results.getString("name");
-		webPageInfo = new WebPageInfo(currentPrice, gameAttributes); 
+		webPageInfo = new GamePageInfo(currentPrice, gameAttributes); 
 	}
 
 	@Override

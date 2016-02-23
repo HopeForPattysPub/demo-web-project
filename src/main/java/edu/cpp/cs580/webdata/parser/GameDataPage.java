@@ -3,17 +3,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class DataPage {
+public abstract class GameDataPage extends WebPage {
 
 //	protected Double currentPrice;
 //	protected Map<String, Object> gameAttributes;
-	protected WebPageInfo webPageInfo;
+	protected GamePageInfo webPageInfo;
 	protected String rawData;
 	protected String pageURL;
 	protected String gameName;
 	
-	public DataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException
+	public GameDataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException
 	{
+		super(url);
 		parseWebPage(url);
 		if(webPageInfo == null) throw new WebPageInfoNotInitializedException();
 		if(rawData == null || pageURL == null || gameName == null) throw new ParserNotCompleteException();
@@ -25,7 +26,7 @@ public abstract class DataPage {
 	 */
 	public abstract void parseWebPage(String url);
 	
-	public WebPageInfo getWebPageInfo()
+	public GamePageInfo getWebPageInfo()
 	{
 		return webPageInfo;
 	}

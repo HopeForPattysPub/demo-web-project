@@ -12,7 +12,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class SteamDataPage extends DataPage {
+public class SteamDataPage extends GameDataPage {
 
 	public SteamDataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException {
 //		super("http://store.steampowered.com/app/368500/");
@@ -46,13 +46,15 @@ public class SteamDataPage extends DataPage {
 			
 		} catch (IOException e) { e.printStackTrace(); }
 		
-		webPageInfo = new WebPageInfo(currentPrice, gameAttributes);
+		webPageInfo = new GamePageInfo(currentPrice, gameAttributes);
 		
 	}
 	
 	public static void main(String[]args) throws ParserNotCompleteException, IOException, ParserNotCompleteException, WebPageInfoNotInitializedException
 	{
 		new SteamDataPage("http://store.steampowered.com/app/368500/");
+//		System.out.println(org.apache.commons.lang3.StringUtils.getJaroWinklerDistance("Assassin's Creed Black Flag", "Assassins Creed Black Flag"));
+//		System.out.println(org.apache.commons.lang3.StringUtils.getJaroWinklerDistance("Assassin's Creed Black Flag", "Assassin's Creed $ Black Flag"));
 //		String html = "<div class=\"game_purchase_action\">\n"+
 //						"<div class=\"game_purchase_action_bg\">\n"+
 //															"<div class=\"game_purchase_price price\">\n"+
