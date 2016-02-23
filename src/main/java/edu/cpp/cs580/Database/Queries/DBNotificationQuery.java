@@ -22,7 +22,7 @@ public class DBNotificationQuery implements NotificationQuery {
 	@Override
 	public boolean addNotification(Notification notice) {
 		Connection connect = pool.getConnection();
-		String query = "INSERT INTO awsdb.Notifications(Username, ItemID, CurrentPrice, NotifyPrice) VALUES(?, ?, ?, ?)";
+		String query = "INSERT INTO awsdb.Notifications(Username, ItemID, NotifyPrice) VALUES(?, ?, ?)";
 		boolean result = true;
 		PreparedStatement stmt = null;
 		
@@ -30,8 +30,7 @@ public class DBNotificationQuery implements NotificationQuery {
 			stmt = connect.prepareStatement(query);
 			stmt.setString(1, notice.getUsername());
 			stmt.setLong(2, notice.getItemID());
-			stmt.setDouble(3, notice.getCurrentPrice());
-			stmt.setDouble(4, notice.getNotifyPrice());
+			stmt.setDouble(3, notice.getNotifyPrice());
 			stmt.executeUpdate();
 			stmt.close();
 		} catch(SQLException e) {
@@ -64,9 +63,8 @@ public class DBNotificationQuery implements NotificationQuery {
 			if (rs.next()) {
 				String name = rs.getString("Username");
 				long id = rs.getLong("ItemID");
-				double curPrice = rs.getDouble("CurrentPrice"),
-					   notifyPrice= rs.getDouble("NotifyPrice");
-				result = new DBNotification(curPrice, id, notifyPrice, name);
+				double notifyPrice= rs.getDouble("NotifyPrice");
+				result = new DBNotification(id, notifyPrice, name);
 			}
 			
 			rs.close();
@@ -94,9 +92,8 @@ public class DBNotificationQuery implements NotificationQuery {
 			while (rs.next()) {
 				String name = rs.getString("Username");
 				long id = rs.getLong("ItemID");
-				double curPrice = rs.getDouble("CurrentPrice"),
-					   notifyPrice= rs.getDouble("NotifyPrice");
-				result.put(id, new DBNotification(curPrice, id, notifyPrice, name));
+				double notifyPrice= rs.getDouble("NotifyPrice");
+				result.put(id, new DBNotification(id, notifyPrice, name));
 			}
 			
 			rs.close();
@@ -124,9 +121,8 @@ public class DBNotificationQuery implements NotificationQuery {
 			while (rs.next()) {
 				String name = rs.getString("Username");
 				long id = rs.getLong("ItemID");
-				double curPrice = rs.getDouble("CurrentPrice"),
-					   notifyPrice= rs.getDouble("NotifyPrice");
-				result.put(name, new DBNotification(curPrice, id, notifyPrice, name));
+				double notifyPrice= rs.getDouble("NotifyPrice");
+				result.put(name, new DBNotification(id, notifyPrice, name));
 			}
 			
 			rs.close();
@@ -142,7 +138,7 @@ public class DBNotificationQuery implements NotificationQuery {
 	@Override
 	public List<Notification> getFulfilledNotifications() {
 		Connection connect = pool.getConnection();
-		String query = "SELECT * FROM awsdb.Notifications WHERE CurrentPrice <= NotifyPrice";
+		String query = "SELECT * FROM awsdb.Notifications AS Note WHERE (SELECT Prod.Price FROM awsdb.StoreProducts AS Prod WHERE Prod.ItemID = Note.ItemID ORDER BY Prod.Price ASC LIMIT 1) <= Note.NotifyPrice";
 		List<Notification> result = new ArrayList<Notification>();
 		PreparedStatement stmt = null;
 		
@@ -153,9 +149,8 @@ public class DBNotificationQuery implements NotificationQuery {
 			while (rs.next()) {
 				String name = rs.getString("Username");
 				long id = rs.getLong("ItemID");
-				double curPrice = rs.getDouble("CurrentPrice"),
-					   notifyPrice= rs.getDouble("NotifyPrice");
-				result.add(new DBNotification(curPrice, id, notifyPrice, name));
+				double notifyPrice= rs.getDouble("NotifyPrice");
+				result.add(new DBNotification(id, notifyPrice, name));
 			}
 			
 			rs.close();
@@ -214,17 +209,16 @@ public class DBNotificationQuery implements NotificationQuery {
 	@Override
 	public boolean updateNotification(Notification notice) {
 		Connection connect = pool.getConnection();
-		String query = "UPDATE awsdb.Notifications SET CurrentPrice = ?, NotifyPrice = ? WHERE Username = ? AND ItemID = ?";
+		String query = "UPDATE awsdb.Notifications SET NotifyPrice = ? WHERE Username = ? AND ItemID = ?";
 		boolean result = true;
 		PreparedStatement stmt = null;
 		
 		try {
 			//First verify the notification exists
 			stmt = connect.prepareStatement(query);
-			stmt.setDouble(1, notice.getCurrentPrice());
-			stmt.setDouble(2, notice.getNotifyPrice());
-			stmt.setString(3, notice.getUsername());
-			stmt.setLong(4, notice.getItemID());
+			stmt.setDouble(1, notice.getNotifyPrice());
+			stmt.setString(2, notice.getUsername());
+			stmt.setLong(3, notice.getItemID());
 			stmt.executeUpdate();
 			stmt.close();
 		} catch(SQLException e) {

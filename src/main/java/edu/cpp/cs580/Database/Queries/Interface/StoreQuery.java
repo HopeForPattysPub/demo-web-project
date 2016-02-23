@@ -1,5 +1,7 @@
 package edu.cpp.cs580.Database.Queries.Interface;
 
+import java.util.Map;
+
 import edu.cpp.cs580.Database.Objects.Interfaces.Store;
 
 public interface StoreQuery {
@@ -10,6 +12,11 @@ public interface StoreQuery {
 	 * @return		True if store is added successfully, false otherwise
 	 */
 	public boolean addStore(String name, String url);
+	/**
+	 * Get all stores in the Database.
+	 * @return	Map of all stores.
+	 */
+	public Map<Integer, Store> getAllStores();
 	/**
 	 * Get the store from the given storeID
 	 * @param storeID	StoreID for store

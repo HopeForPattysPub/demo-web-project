@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.cpp.cs580.Database.DBConnectionPool;
 import edu.cpp.cs580.Database.Objects.DBStore;
@@ -213,5 +215,35 @@ public class DBStoreQuery implements StoreQuery {
 		pool.closeConnection(connect);
 		
 		return storeID;
+	}
+
+	@Override
+	public Map<Integer, Store> getAllStores() {
+		Connection connect = pool.getConnection();
+		String query = "SELECT * FROM awsdb.Stores";
+		Map<Integer, Store> result = new HashMap<Integer, Store>();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = connect.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			
+			//If there is a result, then save it into a Store item
+			while (rs.next()) {
+				String name = rs.getString("StoreName"),
+					   page = rs.getString("WebPage");
+				int id = rs.getInt("StoreID");
+				result.put(id, new DBStore(id, name, page));
+			}
+			
+			//Close to prevent resource leak
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		pool.closeConnection(connect);
+		return result;
 	}
 }

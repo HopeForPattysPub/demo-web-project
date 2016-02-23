@@ -79,7 +79,6 @@ CREATE TABLE Notifications
 (
 	Username VARCHAR(20) NOT NULL
     , ItemID BIGINT NOT NULL
-    , CurrentPrice DECIMAL(10, 2) NOT NULL
     , NotifyPrice DECIMAL(10, 2)
     , PRIMARY KEY (Username, ItemID)
     , FOREIGN KEY (Username) REFERENCES Users(Username)

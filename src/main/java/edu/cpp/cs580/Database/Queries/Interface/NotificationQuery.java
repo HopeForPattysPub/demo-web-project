@@ -46,7 +46,7 @@ public interface NotificationQuery {
 	 */
 	public boolean removeNotification(String username, long itemID);
 	/**
-	 * Updates a given notification. Only the current price and notification price may be updated.
+	 * Updates a given notification. Only the notification price may be updated.
 	 * @param notice	Notification which will be updated
 	 * @return			True if update is successful, false otherwise.
 	 */
