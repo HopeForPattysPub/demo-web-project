@@ -13,7 +13,7 @@ public class DBStoreQueryTestDisabled {
 		StoreQuery sq = new DBStoreQuery();
 		
 		//Add stores to the DB
-		boolean result = sq.addStore("Test", "http://www.example.com");
+		boolean result = sq.addStore("Test", "http://www.example.com", "test");
 		Assert.assertEquals(true, result);
 		
 		//Get the stored using the Store name
