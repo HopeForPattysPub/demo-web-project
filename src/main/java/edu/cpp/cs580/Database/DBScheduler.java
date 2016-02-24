@@ -173,7 +173,7 @@ public class DBScheduler implements Runnable {
 		}
 	}
 	
-	public static void main(String args[]) {
-		DBScheduler sch = getScheduler();
-	}
+//	public static void main(String args[]) {
+//		DBScheduler sch = getScheduler();
+//	}
 }

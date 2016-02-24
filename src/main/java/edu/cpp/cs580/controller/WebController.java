@@ -25,6 +25,7 @@ import com.google.common.net.HostSpecifier;
 import com.google.gson.Gson;
 
 import edu.cpp.cs580.App;
+import edu.cpp.cs580.Database.DBScheduler;
 import edu.cpp.cs580.Database.Objects.DBNotification;
 import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
 import edu.cpp.cs580.data.User;
@@ -66,6 +67,7 @@ public class WebController {
 	 */
 	@Autowired
 	private UserManager userManager;
+	private DBScheduler scheduler = DBScheduler.getScheduler();
 	
 	@Autowired
 	private DBNotificationQuery dbNotificationQuery;
@@ -85,6 +87,17 @@ public class WebController {
 		return "OK";
 	}
 
+	/**
+	 * Set welcome.html to the home page.
+	 * @return	A model and view consisting of the welcome page
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView getWelcomePage() {
+		ModelAndView mav = new ModelAndView("welcome.html");
+		//TODO: Add results for tracking
+		return mav;
+	}
+	
 	/**
 	 * This is a simple example of how to use a data manager
 	 * to retrieve the data and return it as an HTTP response.
