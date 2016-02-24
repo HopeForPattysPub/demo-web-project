@@ -31,6 +31,7 @@ CREATE TABLE Stores
 (	StoreName VARCHAR(50) UNIQUE NOT NULL
 	, StoreID INTEGER UNSIGNED NOT NULL
     , WebPage VARCHAR(255) NOT NULL
+    , ClassName VARCHAR(255) NOT NULL
 	, PRIMARY KEY (StoreID)
 );
 
@@ -130,3 +131,19 @@ END IF;
 RETURN c;
 END$$
 DELIMITER ;
+
+
+#Populate the Database with Steam store and Systems
+INSERT INTO awsdb.stores(StoreName, StoreID, WebPage, ClassName) VALUES ("Steam", 1, "http://store.steampowered.com/", "edu.cpp.cs580.webdata.parser.SteamJSONDataPage");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("XBox", "XBOX");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("XBox 360", "XBOX360");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("XBox One", "XBOX1");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Playstation", "PSX");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Playstation 2", "PS2");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Playstation 3", "PS3");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Playstation 4", "PS4");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Wii", "WII");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Wii U", "WIIU");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("PC", "PC");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Mac", "MAC");
+INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Linux", "LINUX");
