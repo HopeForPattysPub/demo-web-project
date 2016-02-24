@@ -9,9 +9,11 @@ public interface StoreQuery {
 	 * Add a new store to the database. The name must be unique.
 	 * @param name	Name of store
 	 * @param url	URL for store
+	 * @param className	GameDataPage sub-class name which handles this store 
+	 *                  (edu.cpp.cs580.webdata.parser.SteamJSONDataPage).
 	 * @return		True if store is added successfully, false otherwise
 	 */
-	public boolean addStore(String name, String url);
+	public boolean addStore(String name, String url, String className);
 	/**
 	 * Get all stores in the Database.
 	 * @return	Map of all stores.

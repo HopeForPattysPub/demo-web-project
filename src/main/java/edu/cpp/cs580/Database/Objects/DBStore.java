@@ -7,6 +7,7 @@ public class DBStore implements Store {
 	private int storeID;
 	private String storeName;
 	private String webPage;
+	private String className;
 	
 	/******************Constructors*******************/
 	/**
@@ -23,11 +24,13 @@ public class DBStore implements Store {
 	 * @param id	Store ID
 	 * @param name	Store name
 	 * @param url	Store URL
+	 * @param cName	GameDataPage sub-class name which handles this store
 	 */
-	public DBStore(int id, String name, String url) {
+	public DBStore(int id, String name, String url, String cName) {
 		storeID = id;
 		storeName = name;
 		webPage = url;
+		className = cName;
 	}
 	/******************Methods************************/
 	@Override
@@ -58,6 +61,16 @@ public class DBStore implements Store {
 	@Override
 	public void setURL(String url) {
 		webPage = url;
+	}
+
+	@Override
+	public String getClassName() {
+		return className;
+	}
+
+	@Override
+	public void setClassName(String name) {
+		className = name;
 	}
 
 }

@@ -19,9 +19,9 @@ public class DBStoreQuery implements StoreQuery {
 	
 	/******************Methods************************/
 	@Override
-	public boolean addStore(String name, String url) {
+	public boolean addStore(String name, String url, String className) {
 		Connection connect = pool.getConnection();
-		String query = "INSERT INTO awsdb.Stores(StoreName, StoreID, WebPage) VALUES(?,?,?)";
+		String query = "INSERT INTO awsdb.Stores(StoreName, StoreID, WebPage, ClassName) VALUES(?,?,?,?)";
 		boolean result = true;
 		PreparedStatement stmt = null;
 		
@@ -33,6 +33,7 @@ public class DBStoreQuery implements StoreQuery {
 			stmt.setString(1, name);
 			stmt.setInt(2, storeID);
 			stmt.setString(3, url);
+			stmt.setString(4, className);
 			stmt.executeUpdate();
 			stmt.close();
 		} catch(SQLException e) {
@@ -65,9 +66,10 @@ public class DBStoreQuery implements StoreQuery {
 			//If there is a result, then save it into a Store item
 			if (rs.next()) {
 				String name = rs.getString("StoreName"),
-					   page = rs.getString("WebPage");
+					   page = rs.getString("WebPage"),
+					   cName = rs.getString("ClassName");
 				int id = rs.getInt("StoreID");
-				result = new DBStore(id, name, page);
+				result = new DBStore(id, name, page, cName);
 			}
 			
 			//Close to prevent resource leak
@@ -96,9 +98,10 @@ public class DBStoreQuery implements StoreQuery {
 			//If there is a result, then save it into a Store item
 			if (rs.next()) {
 				String name = rs.getString("StoreName"),
-					   page = rs.getString("WebPage");
+					   page = rs.getString("WebPage"),
+					   cName = rs.getString("ClassName");
 				int id = rs.getInt("StoreID");
-				result = new DBStore(id, name, page);
+				result = new DBStore(id, name, page, cName);
 			}
 			
 			//Close to prevent resource leak
@@ -156,7 +159,7 @@ public class DBStoreQuery implements StoreQuery {
 	@Override
 	public boolean updateStore(Store store) {
 		Connection connect = pool.getConnection();
-		String query = "UPDATE awsdb.Stores SET StoreName = ?, WebPage = ? WHERE StoreID = ?";
+		String query = "UPDATE awsdb.Stores SET StoreName = ?, WebPage = ?, ClassName = ? WHERE StoreID = ?";
 		boolean result = true;
 		PreparedStatement stmt = null;
 		
@@ -164,7 +167,8 @@ public class DBStoreQuery implements StoreQuery {
 			stmt = connect.prepareStatement(query);
 			stmt.setString(1, store.getStoreName());
 			stmt.setString(2, store.getURL());
-			stmt.setInt(3, store.getStoreID());
+			stmt.setString(3, store.getClassName());
+			stmt.setInt(4, store.getStoreID());
 			stmt.executeUpdate();
 			stmt.close();
 		} catch(SQLException e) {
@@ -231,9 +235,10 @@ public class DBStoreQuery implements StoreQuery {
 			//If there is a result, then save it into a Store item
 			while (rs.next()) {
 				String name = rs.getString("StoreName"),
-					   page = rs.getString("WebPage");
+					   page = rs.getString("WebPage"),
+					   cName = rs.getString("ClassName");
 				int id = rs.getInt("StoreID");
-				result.put(id, new DBStore(id, name, page));
+				result.put(id, new DBStore(id, name, page, cName));
 			}
 			
 			//Close to prevent resource leak
