@@ -14,7 +14,7 @@ import edu.cpp.cs580.Database.Queries.DBStoreQuery;
 import edu.cpp.cs580.Database.Queries.Interface.PriceHistoryQuery;
 import edu.cpp.cs580.Database.Queries.Interface.StoreProductQuery;
 import edu.cpp.cs580.Database.Queries.Interface.StoreQuery;
-import edu.cpp.cs580.webdata.parser.DataPage;
+import edu.cpp.cs580.webdata.parser.GameDataPage;
 
 public class DBScheduler implements Runnable {
 	/******************Data Members*******************/
@@ -72,10 +72,10 @@ public class DBScheduler implements Runnable {
 	private class DBUpdate implements Runnable {
 		/******************Data Members*****************/
 		private int storeID;
-		private DataPage parser;
+		private GameDataPage parser;
 		
 		/******************Constructors*****************/
-		public DBUpdate(int id, DataPage par) {
+		public DBUpdate(int id, GameDataPage par) {
 			storeID = id;
 			parser = par;
 		}

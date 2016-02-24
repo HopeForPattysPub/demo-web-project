@@ -250,10 +250,9 @@ public class DBNotificationQuery implements NotificationQuery {
 			while (rs.next()) {
 				String name = rs.getString("Username");
 				long id = rs.getLong("ItemID");
-				double curPrice = rs.getDouble("CurrentPrice"),
-					   notifyPrice= rs.getDouble("NotifyPrice");
+				double notifyPrice= rs.getDouble("NotifyPrice");
 				
-				result.add(new DBNotification(curPrice, id, notifyPrice, name));
+				result.add(new DBNotification(id, notifyPrice, name));
 			}
 			
 			rs.close();
