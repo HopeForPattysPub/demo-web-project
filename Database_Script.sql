@@ -1,12 +1,12 @@
 #Used to delete the DB
-DROP DATABASE IF EXISTS AWSDB;
+DROP DATABASE IF EXISTS awsdb;
 
 #Create the DB
-CREATE DATABASE IF NOT EXISTS AWSDB;
+CREATE DATABASE IF NOT EXISTS awsdb;
 
 
 #Begin AWS DB creation
-USE AWSDB;
+USE awsdb;
 
 #Create the Table which holds the different types of systems (e.g PC, XBOX, etc)
 CREATE TABLE Systems
@@ -147,3 +147,5 @@ INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Wii U", "WIIU");
 INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("PC", "PC");
 INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Mac", "MAC");
 INSERT INTO awsdb.systems(SystemName, SystemID) VALUES ("Linux", "LINUX");
+
+select * from awsdb.stores
