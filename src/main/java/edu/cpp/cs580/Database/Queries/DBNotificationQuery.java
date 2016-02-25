@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import edu.cpp.cs580.Database.DBConnectionPool;
 import edu.cpp.cs580.Database.Objects.DBNotification;
+import edu.cpp.cs580.Database.Objects.UserTrackItemjava;
 import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
 import edu.cpp.cs580.Database.Queries.Interface.NotificationQuery;
 
@@ -236,9 +238,9 @@ public class DBNotificationQuery implements NotificationQuery {
 	}
 
 	@Override
-	public List<Notification> getNotifications2(String username) {
+	public List<Notification> getNotificationsItemList(String username) {
 		Connection connect = pool.getConnection();
-		String query = "SELECT * FROM awsdb.Notifications WHERE Username = ?";
+		String query = "select t1.* from awsdb.notifications as t1 where t1.Username = ? group by t1.ItemID";
 		List<Notification> result = new ArrayList<Notification>();
 		PreparedStatement stmt = null;
 		
@@ -264,5 +266,35 @@ public class DBNotificationQuery implements NotificationQuery {
 		pool.closeConnection(connect);
 		return result;
 	}
-
+	@Override
+	public UserTrackItemjava getNotificationsLowestPrice(long itemID) {
+		Connection connect = pool.getConnection();
+		String query = "Select t1.*, t2.* from awsdb.storeproducts as t1 join awsdb.stores as t2 on t2.StoreID = t1.StoreID where ItemID = ? and Price = ( select min(Price) from awsdb.storeproducts where ItemID = ?) limit 1";
+		UserTrackItemjava result = new UserTrackItemjava();
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = connect.prepareStatement(query);
+			stmt.setLong(1, itemID);
+			stmt.setLong(2, itemID);
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				String url = rs.getString("URL");
+				String storeName = rs.getString("StoreName");
+				double price= rs.getDouble("Price");
+				Timestamp priceDate= rs.getTimestamp("PriceDate");
+				
+				result = new UserTrackItemjava(price, priceDate,	url, storeName, null, null, 0);
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		pool.closeConnection(connect);
+		return result;
+	}
 }

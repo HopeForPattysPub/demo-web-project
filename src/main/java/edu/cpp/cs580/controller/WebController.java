@@ -26,14 +26,19 @@ import com.google.gson.Gson;
 
 import edu.cpp.cs580.App;
 import edu.cpp.cs580.Database.DBScheduler;
+import edu.cpp.cs580.Database.Objects.DBItem;
 import edu.cpp.cs580.Database.Objects.DBNotification;
+import edu.cpp.cs580.Database.Objects.UserTrackItemjava;
+import edu.cpp.cs580.Database.Objects.Interfaces.Item;
 import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
+import edu.cpp.cs580.Database.Objects.Interfaces.Store;
 import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
 import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
 import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
+import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
-
+import edu.cpp.cs580.Database.Queries.DBStoreQuery;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -71,6 +76,9 @@ public class WebController {
 	
 	@Autowired
 	private DBNotificationQuery dbNotificationQuery;
+	@Autowired
+	private DBItemQuery dbItemQuery;
+	
 
 	/**
 	 * This is a simple example of how the HTTP API works.
@@ -115,17 +123,43 @@ public class WebController {
 		return user;
 	}
 
+	
+	/*
+	 * Get info on what a user is tracking. query 3 tables together and finds lowest price of each item being tracked
+	 */
 	@RequestMapping(value = "/getUserNotifications/{userName}", method = RequestMethod.GET)
 	String getNotification(@PathVariable("userName") String userName) {
+		//System.out.println("In query");
+		List<UserTrackItemjava> userTrackItemList = new ArrayList<UserTrackItemjava>();
+		List<Notification> NotificationList = dbNotificationQuery.getNotificationsItemList(userName);
+		System.out.println(NotificationList.toString());
 		
-		List<Notification> tempResults = dbNotificationQuery.getNotifications2(userName);
+		long itemID;
+		Item currentItem = null;
+		UserTrackItemjava lowestPriceObject;
+		
+		for(Notification x:NotificationList)
+		{
+			itemID = x.getItemID();
+			System.out.println("Item " + itemID);
+			currentItem = dbItemQuery.getItem(itemID);
+			System.out.println(currentItem.getTitle());
+			
+			lowestPriceObject = dbNotificationQuery.getNotificationsLowestPrice(itemID);
+			System.out.println(lowestPriceObject.getPrice() + "");
+			lowestPriceObject.SetNotifyPrice(x.getNotifyPrice());
+			lowestPriceObject.SetSystem(currentItem.getSystem());
+			lowestPriceObject.SetTitle(currentItem.getTitle());
+			userTrackItemList.add(lowestPriceObject);
+		}
 		
 		String results = null;
 		Gson gson = new Gson();
-		String jsonCartList = gson.toJson(tempResults);
+		String jsonCartList = gson.toJson(userTrackItemList);
 		System.out.println("{\"items\":" + jsonCartList + "}");
 		//results = "{\"items\":" + jsonCartList + "}";
 		results = jsonCartList;
+		
 		return results;
 		
 	}

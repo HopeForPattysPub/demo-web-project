@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
+import edu.cpp.cs580.Database.Queries.DBStoreQuery;
 import edu.cpp.cs580.data.provider.FSUserManager;
 import edu.cpp.cs580.data.provider.UserManager;
 
@@ -31,6 +33,12 @@ public class App {
     public DBNotificationQuery dbNotificationQuery() {
    	 DBNotificationQuery dbNotificationQuery  = new DBNotificationQuery();
         return dbNotificationQuery;
+    }
+    
+    @Bean
+    public DBItemQuery dbItemQuery() {
+   	 DBItemQuery dbItemQuery  = new DBItemQuery();
+        return dbItemQuery;
     }
     
     /**
