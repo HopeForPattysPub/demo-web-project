@@ -39,7 +39,7 @@ newAccountScreen.controller('newAccountInfoPage', function ($scope, $http) {
                else
                {
                   alert("Account successful created");
-                  window.location = "http://localhost:8080/login.html";
+                  window.location = "./login.html";
                }               
             })
             .error(function(data,status) {

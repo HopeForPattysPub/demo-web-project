@@ -20,7 +20,7 @@ LoginScreen.controller('loginInfoPage', function ($scope, $http) {
      }
 	  else
 	  {
-	       var hash = CryptoJS.SHA1(pwString);
+	       var hash = CryptoJS.SHA512(pwString);
 	       $http.get("/login/" + hash + "/" + un)
             
             .success(function(data) {
@@ -31,7 +31,7 @@ LoginScreen.controller('loginInfoPage', function ($scope, $http) {
                }
                else if (data == 1)
                {
-                  window.location.replace("http://localhost:8080/userLanding.html?userName=" + un);
+                  window.location.replace("./userLanding.html?userName=" + un);
                }
               
             })
