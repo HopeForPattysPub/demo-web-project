@@ -17,7 +17,7 @@ newAccountScreen.controller('newAccountInfoPage', function ($scope, $http) {
 	  else if(pw1 == pw2)
 	  {
 	       //alert("PW Match");
-	       var hash = CryptoJS.SHA1(pwString);
+	       var hash = CryptoJS.SHA512(pwString);
 	       //alert(hash);
 	       $http.get("/newaccount/" + $scope.emailToSearch + "/" + hash + "/" + $scope.userNameToSearch )
             
