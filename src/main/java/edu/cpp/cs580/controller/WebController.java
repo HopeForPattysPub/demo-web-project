@@ -39,6 +39,7 @@ import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
 import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
 import edu.cpp.cs580.Database.Queries.DBStoreQuery;
+import edu.cpp.cs580.Database.Queries.Interface.UserQuery;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -78,6 +79,8 @@ public class WebController {
 	private DBNotificationQuery dbNotificationQuery;
 	@Autowired
 	private DBItemQuery dbItemQuery;
+	@Autowired
+	private UserQuery dbUserQuery;
 	
 
 	/**
@@ -283,42 +286,11 @@ public class WebController {
 	 */
 	@RequestMapping(value = "/login/{Pw}/{Uname}", method = RequestMethod.GET)
 	int claudeLogin(@PathVariable("Pw") String Pw, @PathVariable("Uname") String Uname) throws SQLException {
-		
-		// Server is local host, instance is dbo
-		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-      dataSource.setDriver(new com.mysql.jdbc.Driver());
-      dataSource.setUrl("jdbc:mysql://localhost/awsdb");
-      dataSource.setUsername("root");
-      dataSource.setPassword("admin");
+      boolean result = dbUserQuery.loginUser(Uname, Pw);
       
-      JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-      String pwChecker;
-      Integer tempChecker;
-      String sql;
-      //check if Uname exists
-    
-      sql = "SELECT count(UserPassword) FROM awsdb.users WHERE Username = ?";
-      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Uname}, Integer.class);
-      System.out.println("UnCheck " + tempChecker + " login: " + Uname);
-      if(tempChecker != 1)
-      {
-      	return 0;
-      }
-      
-      //Check PW
-      sql = "SELECT UserPassword FROM awsdb.Users WHERE Username = ?";
-      pwChecker = (String)jdbcTemplate.queryForObject(sql, new Object[] {Uname}, String.class);
-      System.out.println("DB Pw lookup: " + pwChecker);
-      System.out.println("Input pw: " + Pw);
-      if(!pwChecker.equals(Pw))
-      {
-      	return 0;
-      }
-      else
-      {
-      	return 1;
-      }
-      
+      if (result)
+    	  return 1;
+      return 0;
 	}
 	
 	/**
