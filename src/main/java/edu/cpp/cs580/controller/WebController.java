@@ -28,11 +28,13 @@ import edu.cpp.cs580.App;
 import edu.cpp.cs580.Database.DBScheduler;
 import edu.cpp.cs580.Database.Objects.DBItem;
 import edu.cpp.cs580.Database.Objects.DBNotification;
+import edu.cpp.cs580.Database.Objects.DBUser;
 import edu.cpp.cs580.Database.Objects.UserTrackItemjava;
 import edu.cpp.cs580.Database.Objects.Interfaces.Item;
 import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
 import edu.cpp.cs580.Database.Objects.Interfaces.Store;
-import edu.cpp.cs580.data.User;
+import edu.cpp.cs580.Database.Objects.Interfaces.User;
+//import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
 import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
 import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
@@ -120,11 +122,11 @@ public class WebController {
 	 * Try it in your web browser:
 	 * 	http://localhost:8080/cs580/user/user101
 	 */
-	@RequestMapping(value = "/cs580/user/{userId}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/cs580/user/{userId}", method = RequestMethod.GET)
 	User getUser(@PathVariable("userId") String userId) {
 		User user = userManager.getUser(userId);
 		return user;
-	}
+	}*/
 
 	
 	/*
@@ -185,7 +187,7 @@ public class WebController {
 	 * @param major
 	 * @return
 	 */
-	@RequestMapping(value = "/cs580/user/{userId}", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/cs580/user/{userId}", method = RequestMethod.POST)
 	User updateUser(
 			@PathVariable("userId") String id,
 			@RequestParam("name") String name,
@@ -196,40 +198,40 @@ public class WebController {
 		user.setName(name);
 		userManager.updateUser(user);
 		return user;
-	}
+	}*/
 
 	/**
 	 * This API deletes the user. It uses HTTP DELETE method.
 	 *
 	 * @param userId
 	 */
-	@RequestMapping(value = "/cs580/user/{userId}", method = RequestMethod.DELETE)
+	/*@RequestMapping(value = "/cs580/user/{userId}", method = RequestMethod.DELETE)
 	void deleteUser(
 			@PathVariable("userId") String userId) {
 		userManager.deleteUser(userId);
-	}
+	}*/
 
 	/**
 	 * This API lists all the users in the current database.
 	 *
 	 * @return
 	 */
-	@RequestMapping(value = "/cs580/users/list", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/cs580/users/list", method = RequestMethod.GET)
 	List<User> listAllUsers() {
 		return userManager.listAllUsers();
-	}
+	}*/
 
 	/*********** Web UI Test Utility **********/
 	/**
 	 * This method provide a simple web UI for you to test the different
 	 * functionalities used in this web service.
 	 */
-	@RequestMapping(value = "/cs580/home", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/cs580/home", method = RequestMethod.GET)
 	ModelAndView getUserHomepage() {
 		ModelAndView modelAndView = new ModelAndView("home");
 		modelAndView.addObject("users", listAllUsers());
 		return modelAndView;
-	}
+	}*/
 
 	
 	/***********Assignment 3******************/
@@ -300,22 +302,10 @@ public class WebController {
 	 */
 	@RequestMapping(value = "/recovery/{Un}/{Email}", method = RequestMethod.GET)
 	int recovery(@PathVariable("Un") String Uname, @PathVariable("Email") String Email) throws SQLException {
+		int tempChecker = 0;
+		User user = dbUserQuery.getUser(Uname);
 		
-		// Server is local host, instance is dbo
-		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-      dataSource.setDriver(new com.mysql.jdbc.Driver());
-      dataSource.setUrl("jdbc:mysql://localhost/awsdb");
-      dataSource.setUsername("root");
-      dataSource.setPassword("admin");
-      
-      JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-      Integer tempChecker;
-      String sql;
-      //check if Uname exists
-    
-      sql = "SELECT count(UserPassword) FROM awsdb.users WHERE Username = ? and Email = ?";
-      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Uname, Email}, Integer.class);
-      System.out.println("UnCheck " + tempChecker + "UN: " + Uname + " Email: " + Email);
+		//TODO: Some sort of recovery stuff.
       if(tempChecker != 1)
       {
       	return 0;
@@ -337,46 +327,8 @@ public class WebController {
 	 */
 	@RequestMapping(value = "/newaccount/{Email}/{Pw}/{Uname}", method = RequestMethod.GET)
 	int claudeLogin(@PathVariable("Email") String Email, @PathVariable("Pw") String Pw, @PathVariable("Uname") String Uname) throws SQLException {
-		System.out.println("inside web");
-		// Server is local host, instance is dbo
-		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-      dataSource.setDriver(new com.mysql.jdbc.Driver());
-      dataSource.setUrl("jdbc:mysql://localhost/awsdb");
-      dataSource.setUsername("root");
-      dataSource.setPassword("admin");
-      
-      JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-      Integer tempChecker;
-      
-      //Check UN
-      String sql = "SELECT count(Email) FROM awsdb.users WHERE Username = ?";
-      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Uname}, Integer.class);
-      //System.out.println(tempChecker);
-      
-      if(tempChecker != 0)
-      {
-      	return 0;
-      }
-      
-      //Check Email
-      sql = "SELECT count(Username) FROM awsdb.users WHERE Email = ?";
-      tempChecker = (Integer) jdbcTemplate.queryForObject(sql, new Object[] {Email}, Integer.class);
-      System.out.println(tempChecker);
-      
-      if(tempChecker != 0)
-      {
-      	return 1;
-      }
-      
-      
-      //Add user to DB
-      jdbcTemplate.update(
-      	    "INSERT INTO awsdb.Users (Username, Email, UserPassword) VALUES (?, ?, ?)",
-      	    new Object[]{Uname, Email, Pw}
-      );
-      
-		
-		return 3;
+		User newUser = new DBUser(Uname, Email, Pw);
+		return dbUserQuery.addUser(newUser);
 	}
 	
 	/**
