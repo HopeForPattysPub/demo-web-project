@@ -55,7 +55,7 @@ public class DBItemQuery implements ItemQuery {
 	@Override
 	public Item getItem(long itemID) {
 		
-		System.err.println("if error");
+		
 		Connection connect = pool.getConnection();
 		String query = "SELECT * FROM awsdb.items WHERE ItemID = ?";
 		Item result = null;
