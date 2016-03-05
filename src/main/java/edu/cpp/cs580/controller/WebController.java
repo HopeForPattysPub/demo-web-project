@@ -177,6 +177,11 @@ public class WebController {
 		return user;
 	}*/
 
+	@RequestMapping(value = "/addUserNotification/{userName}/{itemID}/{noticePrice}", method = RequestMethod.POST)
+	boolean addNotification(@PathVariable("userName") String uName, @PathVariable("itemID") long itemID, @PathVariable("noticePrice") double nPrice) {
+		Notification note = new DBNotification(itemID, nPrice, uName);
+		return dbNotificationQuery.addNotification(note);
+	}
 	
 	/*
 	 * Get info on what a user is tracking. query 3 tables together and finds lowest price of each item being tracked

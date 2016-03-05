@@ -28,7 +28,7 @@ public class DBStoreProductQuery implements StoreProductQuery {
 		try {
 			stmt = connect.prepareStatement(query);
 			stmt.setInt(1, newProduct.getStoreID());
-			stmt.set	Long(2, newProduct.getItemID());
+			stmt.setLong(2, newProduct.getItemID());
 			stmt.setString(3, newProduct.getStoreProductID());
 			stmt.setDouble(4, newProduct.getPrice());
 			stmt.setTimestamp(5, newProduct.getPriceDate());
