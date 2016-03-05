@@ -23,7 +23,7 @@ public class SteamDataPage extends GameDataPage {
 //		super("http://store.steampowered.com/app/368500/");
 //		super("http://store.steampowered.com/api/appdetails?appids=57690");
 //		super("http://store.steampowered.com/stats/?l=english");
-		super(url);
+		super(url, url);
 	}
 
 	public void parseWebPage(String url) {
