@@ -7,14 +7,27 @@ public abstract class GameDataPage extends WebPage {
 
 	protected GamePageInfo webPageInfo;
 	protected String gameName;
+	protected String storeID;
 	protected Double gamePrice = null;
 	
-	public GameDataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException
+	public String getStoreID() { return storeID; }
+	
+	public GameDataPage(String url, String storeID)
 	{
 		super(url);
 		parseWebPage(url);
-		if(webPageInfo == null) throw new WebPageInfoNotInitializedException();
-		if(gamePrice == null|| rawData == null || pageURL == null || gameName == null) throw new ParserNotCompleteException();
+		if(webPageInfo == null)
+			try {
+				throw new WebPageInfoNotInitializedException();
+			} catch (WebPageInfoNotInitializedException e) {
+				e.printStackTrace();
+			}
+		if(gamePrice == null|| rawData == null || pageURL == null || gameName == null)
+			try {
+				throw new ParserNotCompleteException();
+			} catch (ParserNotCompleteException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	/**

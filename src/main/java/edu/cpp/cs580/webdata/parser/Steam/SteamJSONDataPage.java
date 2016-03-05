@@ -15,6 +15,9 @@ import org.json.JSONObject;
 
 import com.gargoylesoftware.htmlunit.javascript.host.media.rtc.webkitRTCPeerConnection;
 
+import edu.cpp.cs580.Database.Objects.DBStoreProduct;
+import edu.cpp.cs580.Database.Objects.Interfaces.StoreProduct;
+import edu.cpp.cs580.Database.Queries.DBStoreProductQuery;
 import edu.cpp.cs580.webdata.parser.GameDataPage;
 import edu.cpp.cs580.webdata.parser.GamePageInfo;
 import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
@@ -37,12 +40,11 @@ public class SteamJSONDataPage extends GameDataPage {
 	public List<String> getScreenshots() { return gameScreenshotURLs; }
 	public double getInitialPrice() { return gameInitialPrice; }
 	
-		
-	public SteamJSONDataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException {
+	public SteamJSONDataPage(int appID) {
 //		super("http://store.steampowered.com/app/368500/");
 //		super("http://store.steampowered.com/api/appdetails?appids=368500");
 //		super("http://store.steampowered.com/stats/?l=english");//365590
-		super("http://store.steampowered.com/api/appdetails?appids=" + url);
+		super("http://store.steampowered.com/api/appdetails?appids=" + appID, ""+appID);
 	}
 	
 	public void parseWebPage(int appid)
@@ -155,7 +157,7 @@ public class SteamJSONDataPage extends GameDataPage {
 //		info.getGameAttributes().keySet().forEach(k ->{
 //			System.out.println(k + ": " + info.getGameAttributes().get(k);
 //		});
-		edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage("365590");
+		edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage(365590);
 		edu.cpp.cs580.webdata.parser.GamePageInfo wPI = steamJSONPage.getWebPageInfo();
 		String retString = "";
 		retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";

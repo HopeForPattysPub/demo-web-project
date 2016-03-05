@@ -32,6 +32,7 @@ import edu.cpp.cs580.App;
 import edu.cpp.cs580.Database.DBScheduler;
 import edu.cpp.cs580.Database.Objects.DBItem;
 import edu.cpp.cs580.Database.Objects.DBNotification;
+import edu.cpp.cs580.Database.Objects.DBStoreProduct;
 import edu.cpp.cs580.Database.Objects.DBUser;
 import edu.cpp.cs580.Database.Objects.UserTrackItemjava;
 import edu.cpp.cs580.Database.Objects.Interfaces.Item;
@@ -41,8 +42,10 @@ import edu.cpp.cs580.Database.Objects.Interfaces.StoreProduct;
 import edu.cpp.cs580.Database.Objects.Interfaces.User;
 //import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
+import edu.cpp.cs580.webdata.parser.GameDataPage;
 import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
 import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
+import edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage;
 import edu.cpp.cs580.webdata.parser.Steam.SteamTopPage;
 import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
@@ -53,6 +56,7 @@ import edu.cpp.cs580.Database.Queries.Interface.UserQuery;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.ParseException;
 
@@ -107,6 +111,28 @@ public class WebController {
 		// and run the application locally to check your changes
 		// with the URL: http://localhost:8080/
 		return "OK";
+	}
+	
+	private boolean addStoreProduct(int store, String storeID)
+	{
+		if(dbStoreIDQuery.getSingleProduct(store, storeID) != null) return false;
+		GameDataPage dataPage = null;
+		
+		if(store == 1)
+			dataPage = new SteamJSONDataPage(Integer.parseInt(storeID));
+		else throw new Error("Incorrect store");
+		
+		// TODO: Use dbItemQuery searchTitle function and utilize edit distance to determine if title is close
+		if(dbItemQuery.getItems("Title", dataPage.getGameName()).size() == 0)
+			dbItemQuery.addItem("PC", dataPage.getGameName());
+		Item item = dbItemQuery.getItems("Title", dataPage.getGameName()).values().iterator().next();
+		dbStoreIDQuery.addStoreProduct(new DBStoreProduct(item.getItemID(), 
+															dataPage.getPrice(), 
+															new Timestamp((new java.util.Date()).getTime()), 
+															store, 
+															dataPage.getStoreID(), 
+															dataPage.getPageURL()));
+		return true;
 	}
 	
 	@RequestMapping(value = "/steamTopPage", method = RequestMethod.GET)
