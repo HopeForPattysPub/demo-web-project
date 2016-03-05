@@ -463,7 +463,7 @@ public class WebController {
 			}
 			
 		} catch (WebPageInfoNotInitializedException | IOException | ParserNotCompleteException e) { System.out.println("Parser Implemented Wrong. Sorry About That."); System.exit(1); }
-//		System.out.println(retString);
+//		System.out.println(retString); 
 		return retString;
 	}
 }
