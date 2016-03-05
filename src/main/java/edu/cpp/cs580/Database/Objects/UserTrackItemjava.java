@@ -50,6 +50,16 @@ public class UserTrackItemjava {
 		this.notifyPrice = notifyPrice;
 	}
 	
+	public void SetPrice(double price)
+	{
+		this.price = price;
+	}
+	
+	public void SetURL(String url)
+	{
+		this.url = url;
+	}
+	
 	public void SetTitle(String title)
 	{
 		this.title = title;
