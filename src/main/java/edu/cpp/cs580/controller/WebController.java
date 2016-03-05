@@ -471,34 +471,31 @@ public class WebController {
 	@RequestMapping(value = "/parser/steam/{url}", method = RequestMethod.GET)
 	String getSteamInfo(@PathVariable("url") String url) {
 		String retString = "";
-		try {
-			edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage(url);
-			edu.cpp.cs580.webdata.parser.GamePageInfo wPI = steamJSONPage.getWebPageInfo();
-			retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";
-			
-			for(String key : new java.util.TreeSet<String>(wPI.getGameAttributes().keySet())) {
-				retString += key.substring(0,key.lastIndexOf("_")) + ": ";
-				String type = key.substring(key.lastIndexOf("_") + 1);
-				switch(type)
-				{
-					case "string":
-						retString += (String)wPI.getGameAttributes().get(key);
-						break;
-					case "double":
-						retString += (Double)wPI.getGameAttributes().get(key);
-						break;
-					case "list":
-						List<String> list = (List<String>)wPI.getGameAttributes().get(key);
-						for(String value : list) {
-							retString += value;
-							if(!list.get(list.size()-1).equals(value)) retString += ", "; 
-						}
-						break;
-				}
-				retString += "<hr>";
+		edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage(Integer.parseInt(url));
+		edu.cpp.cs580.webdata.parser.GamePageInfo wPI = steamJSONPage.getWebPageInfo();
+		retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";
+		
+		for(String key : new java.util.TreeSet<String>(wPI.getGameAttributes().keySet())) {
+			retString += key.substring(0,key.lastIndexOf("_")) + ": ";
+			String type = key.substring(key.lastIndexOf("_") + 1);
+			switch(type)
+			{
+				case "string":
+					retString += (String)wPI.getGameAttributes().get(key);
+					break;
+				case "double":
+					retString += (Double)wPI.getGameAttributes().get(key);
+					break;
+				case "list":
+					List<String> list = (List<String>)wPI.getGameAttributes().get(key);
+					for(String value : list) {
+						retString += value;
+						if(!list.get(list.size()-1).equals(value)) retString += ", "; 
+					}
+					break;
 			}
-			
-		} catch (WebPageInfoNotInitializedException | IOException | ParserNotCompleteException e) { System.out.println("Parser Implemented Wrong. Sorry About That."); System.exit(1); }
+			retString += "<hr>";
+		}
 //		System.out.println(retString); 
 		return retString;
 	}
