@@ -136,33 +136,40 @@ public class WebController {
 	}
 	
 	@RequestMapping(value = "/steamTopPage", method = RequestMethod.GET)
-	public List<Integer> getTopPage() {
+	public String getTopPage() {
 		List<Integer> topList = new ArrayList<>();
 		SteamTopPage test = new SteamTopPage();
 		topList = test.getTopGameIDList(); 
 		List<UserTrackItemjava> TopGamesList = new ArrayList<UserTrackItemjava>();
 		
 		String storeItemID;
-		StoreProduct currentItem = null;
-		UserTrackItemjava lowestPriceObject;
+		StoreProduct currentStoreItem = null;
+		Item currentItem = null;
+		UserTrackItemjava lowestPriceObject = null;
 		
 		for(Integer x:topList)
 		{
+			System.out.println(x.toString());
 			storeItemID = Integer.toString(x);
-			currentItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
-			System.out.println(currentItem.getTitle());
+			currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
 			
-			lowestPriceObject = dbNotificationQuery.getNotificationsLowestPrice(itemID);
-			System.out.println(lowestPriceObject.getPrice() + "");
-			lowestPriceObject.SetNotifyPrice(x.getNotifyPrice());
-			lowestPriceObject.SetSystem(currentItem.getSystem());
-			lowestPriceObject.SetTitle(currentItem.getTitle());
-			userTrackItemList.add(lowestPriceObject);
+			if(currentStoreItem != null)
+			{
+				currentItem =  dbItemQuery.getItem(currentStoreItem.getItemID());
+				lowestPriceObject = new UserTrackItemjava();
+				lowestPriceObject.SetURL(currentStoreItem.getURL());
+				lowestPriceObject.SetPrice(currentStoreItem.getPrice());
+				lowestPriceObject.SetSystem(currentItem.getSystem());
+				lowestPriceObject.SetTitle(currentItem.getTitle());
+				TopGamesList.add(lowestPriceObject);
+				
+			}
+			
 		}
 		
 		String results = null;
 		Gson gson = new Gson();
-		String jsonCartList = gson.toJson(userTrackItemList);
+		String jsonCartList = gson.toJson(TopGamesList);
 		System.out.println("{\"items\":" + jsonCartList + "}");
 		//results = "{\"items\":" + jsonCartList + "}";
 		results = jsonCartList;
@@ -170,8 +177,6 @@ public class WebController {
 		return results;
 		
 		
-		
-		return topList;
 	}
 
 	/**
@@ -203,6 +208,11 @@ public class WebController {
 		return user;
 	}*/
 
+	@RequestMapping(value = "/addUserNotification/{userName}/{itemID}/{noticePrice}", method = RequestMethod.POST)
+	boolean addNotification(@PathVariable("userName") String uName, @PathVariable("itemID") long itemID, @PathVariable("noticePrice") double nPrice) {
+		Notification note = new DBNotification(itemID, nPrice, uName);
+		return dbNotificationQuery.addNotification(note);
+	}
 	
 	/*
 	 * Get info on what a user is tracking. query 3 tables together and finds lowest price of each item being tracked

@@ -69,13 +69,19 @@
                <label>Popular Games</label>
                <table border="1">
                    <tr>
-                       <td>Game ID</td>
-                       <td>Add</td>
+                       <td>Title</td>
+                       <td>System</td>
+                       <td>Price</td>
+                       <td>Link</td>
+                       <td>Track</td>
                        
                    </tr>
 
                    <tr ng-repeat="iD in TopList">
-                       <td>{{iD}}</td>
+                       <td>{{iD.title}}</td>
+                       <td>{{iD.system}}</td>
+                       <td>{{iD.price}}</td>
+                       <td>{{iD.url}}</td>
                        <td><button ng-click="addItem(iD)">ADD</button></td>
                    </tr>
                </table>
