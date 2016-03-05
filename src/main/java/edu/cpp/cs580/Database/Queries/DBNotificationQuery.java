@@ -23,6 +23,7 @@ public class DBNotificationQuery implements NotificationQuery {
 	/******************Methods************************/
 	@Override
 	public boolean addNotification(Notification notice) {
+		System.out.println("adding notication");
 		Connection connect = pool.getConnection();
 		String query = "INSERT INTO awsdb.Notifications(Username, ItemID, NotifyPrice) VALUES(?, ?, ?)";
 		boolean result = true;
@@ -285,7 +286,7 @@ public class DBNotificationQuery implements NotificationQuery {
 				double price= rs.getDouble("Price");
 				Timestamp priceDate= rs.getTimestamp("PriceDate");
 				
-				result = new UserTrackItemjava(price, priceDate,	url, storeName, null, null, 0);
+				result = new UserTrackItemjava(itemID, price, priceDate,	url, storeName, null, null, 0);
 			}
 			
 			rs.close();
