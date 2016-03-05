@@ -107,7 +107,6 @@ public class DBUserQuery implements UserQuery {
 			if (rs.next()) {
 				//Verify password
 				String pwd = rs.getString("UserPassword");
-				System.err.println(pwd);
 				if (pwd.equals(password))
 					result = true;
 			}
