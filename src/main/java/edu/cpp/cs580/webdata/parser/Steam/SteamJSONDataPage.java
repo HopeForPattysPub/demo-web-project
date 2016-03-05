@@ -42,7 +42,7 @@ public class SteamJSONDataPage extends GameDataPage {
 //		super("http://store.steampowered.com/app/368500/");
 //		super("http://store.steampowered.com/api/appdetails?appids=368500");
 //		super("http://store.steampowered.com/stats/?l=english");//365590
-		super(url);
+		super("http://store.steampowered.com/api/appdetails?appids=" + url);
 	}
 	
 	public void parseWebPage(int appid)
@@ -150,7 +150,40 @@ public class SteamJSONDataPage extends GameDataPage {
 //		System.out.println("test");
 //		List<String> ret = new ArrayList<>();
 //		new SteamJSONDataPage("http://store.steampowered.com/api/appdetails/?appids=368500");
-		new SteamJSONDataPage("http://store.steampowered.com/api/appdetails/?appids=365590");
+//		GamePageInfo info = (new SteamJSONDataPage("365590")).getWebPageInfo();
+//		System.out.println(info.getCurrentPrice());
+//		info.getGameAttributes().keySet().forEach(k ->{
+//			System.out.println(k + ": " + info.getGameAttributes().get(k);
+//		});
+		edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage("365590");
+		edu.cpp.cs580.webdata.parser.GamePageInfo wPI = steamJSONPage.getWebPageInfo();
+		String retString = "";
+		retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";
+		
+		for(String key : new java.util.TreeSet<String>(wPI.getGameAttributes().keySet())) {
+			retString += key.substring(0,key.lastIndexOf("_")) + ": ";
+			String type = key.substring(key.lastIndexOf("_") + 1);
+			switch(type)
+			{
+				case "string":
+					retString += (String)wPI.getGameAttributes().get(key);
+					break;
+				case "double":
+					retString += (Double)wPI.getGameAttributes().get(key);
+					break;
+				case "list":
+					List<String> list = (List<String>)wPI.getGameAttributes().get(key);
+					for(String value : list) {
+						retString += value;
+						if(!list.get(list.size()-1).equals(value)) retString += ", "; 
+					}
+					break;
+			}
+			retString += "<hr>";
+		}
+		System.out.println(retString);
+
+		
 		//English<strong>*</strong>, French<strong>*</strong>, Italian<strong>*</strong>, German<strong>*</strong>, Spanish<strong>*</strong>, Czech, Dutch, Hungarian, Japanese<strong>*</strong>, Korean, Polish, Portuguese-Brazil<strong>*</strong>, Russian<strong>*</strong>, Simplified Chinese, Traditional Chinese<br><strong>*</strong>languages with full audio support
 		
 		
