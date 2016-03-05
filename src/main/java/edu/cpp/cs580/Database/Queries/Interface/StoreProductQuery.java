@@ -19,6 +19,13 @@ public interface StoreProductQuery {
 	 */
 	public StoreProduct getSingleProduct(int storeID, long itemID);
 	/**
+	 * Retrieves a store product from a given store, given the store product ID
+	 * @param storeID			Store ID
+	 * @param storeProductID	Store product ID for item
+	 * @return					Single store product or NULL if none exists.
+	 */
+	public StoreProduct getSingleProduct(int storeID, String storeProductID);
+	/**
 	 * Get multiple products for the given storeID. May be zero or more depending on result
 	 * @param storeID	StoreID of store
 	 * @return			Map of store products. Key is itemID

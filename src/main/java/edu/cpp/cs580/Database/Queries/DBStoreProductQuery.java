@@ -226,4 +226,38 @@ public class DBStoreProductQuery implements StoreProductQuery {
 		return result;
 	}
 
+	@Override
+	public StoreProduct getSingleProduct(int storeID, String storeProductID) {
+		Connection connect = pool.getConnection();
+		String query = "SELECT * FROM awsdb.StoreProducts WHERE StoreID = ? AND StoreProductID = ?";
+		StoreProduct result = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = connect.prepareStatement(query);
+			stmt.setInt(1, storeID);
+			stmt.setString(2, storeProductID);
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				int strID = rs.getInt("StoreID");
+				long itmID = rs.getLong("ItemID");
+				String spID = rs.getString("StoreProductID"),
+					   url = rs.getString("URL");
+				double price = rs.getDouble("Price");
+				Timestamp date = rs.getTimestamp("PriceDate");
+				
+				result = new DBStoreProduct(itmID, price, date, strID, spID, url);
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		pool.closeConnection(connect);
+		return result;
+	}
+
 }
