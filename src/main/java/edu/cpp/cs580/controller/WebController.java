@@ -37,13 +37,16 @@ import edu.cpp.cs580.Database.Objects.UserTrackItemjava;
 import edu.cpp.cs580.Database.Objects.Interfaces.Item;
 import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
 import edu.cpp.cs580.Database.Objects.Interfaces.Store;
+import edu.cpp.cs580.Database.Objects.Interfaces.StoreProduct;
 import edu.cpp.cs580.Database.Objects.Interfaces.User;
 //import edu.cpp.cs580.data.User;
 import edu.cpp.cs580.data.provider.UserManager;
 import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
 import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
+import edu.cpp.cs580.webdata.parser.Steam.SteamTopPage;
 import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
+import edu.cpp.cs580.Database.Queries.DBStoreProductQuery;
 import edu.cpp.cs580.Database.Queries.DBStoreQuery;
 import edu.cpp.cs580.Database.Queries.Interface.UserQuery;
 
@@ -87,6 +90,8 @@ public class WebController {
 	private DBItemQuery dbItemQuery;
 	@Autowired
 	private UserQuery dbUserQuery;
+	@Autowired
+	private DBStoreProductQuery dbStoreIDQuery;
 	
 
 	/**
@@ -102,6 +107,45 @@ public class WebController {
 		// and run the application locally to check your changes
 		// with the URL: http://localhost:8080/
 		return "OK";
+	}
+	
+	@RequestMapping(value = "/steamTopPage", method = RequestMethod.GET)
+	public List<Integer> getTopPage() {
+		List<Integer> topList = new ArrayList<>();
+		SteamTopPage test = new SteamTopPage();
+		topList = test.getTopGameIDList(); 
+		List<UserTrackItemjava> TopGamesList = new ArrayList<UserTrackItemjava>();
+		
+		String storeItemID;
+		StoreProduct currentItem = null;
+		UserTrackItemjava lowestPriceObject;
+		
+		for(Integer x:topList)
+		{
+			storeItemID = Integer.toString(x);
+			currentItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
+			System.out.println(currentItem.getTitle());
+			
+			lowestPriceObject = dbNotificationQuery.getNotificationsLowestPrice(itemID);
+			System.out.println(lowestPriceObject.getPrice() + "");
+			lowestPriceObject.SetNotifyPrice(x.getNotifyPrice());
+			lowestPriceObject.SetSystem(currentItem.getSystem());
+			lowestPriceObject.SetTitle(currentItem.getTitle());
+			userTrackItemList.add(lowestPriceObject);
+		}
+		
+		String results = null;
+		Gson gson = new Gson();
+		String jsonCartList = gson.toJson(userTrackItemList);
+		System.out.println("{\"items\":" + jsonCartList + "}");
+		//results = "{\"items\":" + jsonCartList + "}";
+		results = jsonCartList;
+		
+		return results;
+		
+		
+		
+		return topList;
 	}
 
 	/**

@@ -23,13 +23,23 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
 	  if(username == "$%notset%$") window.location.replace("/");
 	  
      document.getElementById("Welcome").innerHTML = ("Welcome, " + UN[1]);
-     alert("in welcome");
+    
        
       $http.get("/getUserNotifications/" + UN[1])
       .success(function(data){
-         alert("finished");
+         
          $scope.items = data;
       });
+      
+     
+      
+      $http.get("/steamTopPage")
+      .success(function(data){
+         
+         $scope.TopList = data;
+      });
+      
+      
    }
   
   

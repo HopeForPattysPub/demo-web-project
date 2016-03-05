@@ -64,6 +64,25 @@
 	            <br><hr><br>
 				<p ng-bind-html="pageOutput"></p>
 	        </div>
+	        
+	        <div>
+               <label>Popular Games</label>
+               <table border="1">
+                   <tr>
+                       <td>Game ID</td>
+                       <td>Add</td>
+                       
+                   </tr>
+
+                   <tr ng-repeat="iD in TopList">
+                       <td>{{iD}}</td>
+                       <td><button ng-click="addItem(iD)">ADD</button></td>
+                   </tr>
+               </table>
+           </div>
+	        
+	        
+	        
 	    </div>
 
 	</body>
