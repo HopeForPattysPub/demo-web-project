@@ -125,7 +125,9 @@ public class WebController {
 		// TODO: Use dbItemQuery searchTitle function and utilize edit distance to determine if title is close
 		if(dbItemQuery.getItems("Title", dataPage.getGameName()).size() == 0)
 			dbItemQuery.addItem("PC", dataPage.getGameName());
+		
 		Item item = dbItemQuery.getItems("Title", dataPage.getGameName()).values().iterator().next();
+		
 		dbStoreIDQuery.addStoreProduct(new DBStoreProduct(item.getItemID(), 
 															dataPage.getPrice(), 
 															new Timestamp((new java.util.Date()).getTime()), 
@@ -153,18 +155,25 @@ public class WebController {
 			storeItemID = Integer.toString(x);
 			currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
 			
-			if(currentStoreItem != null)
+			
+			
+			
+			
+			if(currentStoreItem == null)
 			{
-				currentItem =  dbItemQuery.getItem(currentStoreItem.getItemID());
-				lowestPriceObject = new UserTrackItemjava();
-				lowestPriceObject.SetURL(currentStoreItem.getURL());
-				lowestPriceObject.SetPrice(currentStoreItem.getPrice());
-				lowestPriceObject.SetSystem(currentItem.getSystem());
-				lowestPriceObject.SetItemID(currentStoreItem.getItemID());
-				lowestPriceObject.SetTitle(currentItem.getTitle());
-				TopGamesList.add(lowestPriceObject);
-				
+				System.out.print("first query null");
+				//System.out.println(addStoreProduct(1, storeItemID));
+				currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);				
 			}
+			System.out.print(currentStoreItem);
+			currentItem =  dbItemQuery.getItem(currentStoreItem.getItemID());
+			lowestPriceObject = new UserTrackItemjava();
+			lowestPriceObject.SetURL(currentStoreItem.getURL());
+			lowestPriceObject.SetPrice(currentStoreItem.getPrice());
+			lowestPriceObject.SetSystem(currentItem.getSystem());
+			lowestPriceObject.SetItemID(currentStoreItem.getItemID());
+			lowestPriceObject.SetTitle(currentItem.getTitle());
+			TopGamesList.add(lowestPriceObject);
 			
 		}
 		
