@@ -15,6 +15,7 @@ public abstract class GameDataPage extends WebPage {
 	public GameDataPage(String url, String storeID)
 	{
 		super(url);
+		this.gameName = storeID;
 		parseWebPage(url);
 		if(webPageInfo == null)
 			try {

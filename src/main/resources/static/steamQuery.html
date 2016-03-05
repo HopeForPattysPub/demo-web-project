@@ -1,0 +1,35 @@
+<html ng-app="SteamQueryTest">
+	<!-- This page uses AngularJS -->
+	<head>
+	    <title>Steam Parsing Test</title>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
+	    <script src="/js/steam-query-test-ajs.js"></script>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	</head>
+
+	<body ng-controller="SteamInfoPage">
+
+	    <hr>
+
+	    <div>
+	        <div>
+	            <label>Steam Query List</label>
+	        </div>
+
+	        <hr>
+
+	        <div>
+	            <b><label>Steam Query Test</label></b>
+	            <br>
+<!-- 	            Enter a Query
+	            <br>
+	            <input type="text" id="appid" ng-model="appidToSearch"><button ng-click="parseQuery()">Get</button>
+	            <br><hr><br>
+				<p ng-bind-html="pageOutput"></p>
+	        </div>
+	    </div>
+
+	</body>
+
+</html>

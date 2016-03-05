@@ -17,10 +17,12 @@ import edu.cpp.cs580.webdata.parser.QueryPage;
 public class SteamQueryPage extends QueryPage {
 
 	private final static String BASEURL = "http://store.steampowered.com/search/?snr=1_4_4__12&term=";
-	LinkedHashMap<String,String> linksMap;
+	private LinkedHashMap<String,String> linksMap;
+	private LinkedHashMap<String, Integer> appIDMap;
 	public SteamQueryPage(String query) {
 		super(query);
 		linksMap = new LinkedHashMap<>();
+		appIDMap = new LinkedHashMap<>();
 		parseQueryPage();
 	}
 	
@@ -32,6 +34,7 @@ public class SteamQueryPage extends QueryPage {
 			        .get();
 			Elements result = doc.select("div#search_result_container").select("a[href]");
 			result.forEach(item -> linksMap.put(item.select("span.title").first().text(), item.attr("href")));
+			result.forEach(item -> appIDMap.put(item.select("span.title").first().text(), Integer.parseInt(item.attr("data-ds-appid"))));
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
@@ -40,6 +43,11 @@ public class SteamQueryPage extends QueryPage {
 		List<String> names = new ArrayList<>();
 		names.addAll(linksMap.keySet());
 		return names;
+	}
+	
+	public Integer getAppID(String name)
+	{
+		return appIDMap.get(name);
 	}
 	
 	public String getLink(String name)
