@@ -53,7 +53,7 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
 	  		$scope.pageOutput = 'Error';
 	  	});
   }
-	$scope.updateItem = function(itemID) {
+	$scope.addItem = function(itemID) {
 		var username = getUserName();
 		var notifyPrice = window.prompt("Notification Price", 0);
 		$http.post("/addNotification/" + username + "/" + itemID + "/" + notifyPrice)
