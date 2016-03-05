@@ -46,6 +46,7 @@ import edu.cpp.cs580.webdata.parser.GameDataPage;
 import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
 import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
 import edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage;
+import edu.cpp.cs580.webdata.parser.Steam.SteamQueryPage;
 import edu.cpp.cs580.webdata.parser.Steam.SteamTopPage;
 import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
@@ -128,13 +129,31 @@ public class WebController {
 		
 		Item item = dbItemQuery.getItem(dataPage.getGameName(),"PC");
 		System.out.println("created item" + item);
-		dbStoreIDQuery.addStoreProduct(new DBStoreProduct(item.getItemID(), 
+		return dbStoreIDQuery.addStoreProduct(new DBStoreProduct(item.getItemID(), 
 															dataPage.getPrice(), 
 															new Timestamp((new java.util.Date()).getTime()), 
 															store, 
 															storeID, 
 															dataPage.getPageURL()));
-		return true;
+		
+	}
+	
+	@RequestMapping(value = "/parser/steam/query/{query}", method = RequestMethod.GET)
+	public String getQueryResults(@PathVariable("query") String query)
+	{
+		SteamQueryPage queryPage = new SteamQueryPage(query);
+		List<String> names = queryPage.getNames();
+		List<UserTrackItemjava> queryItemsList = new ArrayList<UserTrackItemjava>();
+		
+		Item currentItem = null;
+		UserTrackItemjava matchedQueryObject = null;
+		names.forEach(n -> {
+			String storeItemID = ""+queryPage.getAppID(n);
+			StoreProduct currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
+			
+			if(currentStoreItem != null)
+		});
+		return null;
 	}
 	
 	@RequestMapping(value = "/steamTopPage", method = RequestMethod.GET)
