@@ -3,10 +3,12 @@ package edu.cpp.cs580.webdata.parser;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class GamePageInfo {
 
 	protected Double currentPrice;
-//	protected String description;
+
+	@Deprecated
 	protected Map<String, Object> gameAttributes;
 	
 //	public WebPageInfo()
@@ -23,6 +25,14 @@ public class GamePageInfo {
 	
 	public Double getCurrentPrice() { return currentPrice; }
 	
+	/**
+	 * Not a good way of doing this since it is awkward to retrieve data from the Map.
+	 * DataPage should return any extra data that might be needed to inform the DB of 
+	 * game properties.
+	 * 
+	 * @return
+	 */
+	@Deprecated
 	public Map<String, Object> getGameAttributes() { return gameAttributes; }
 	
 }

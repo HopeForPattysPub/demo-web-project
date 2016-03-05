@@ -422,7 +422,7 @@ public class WebController {
 	String getSteamInfo(@PathVariable("url") String url) {
 		String retString = "";
 		try {
-			edu.cpp.cs580.webdata.parser.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.SteamJSONDataPage(url);
+			edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage steamJSONPage = new edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage(url);
 			edu.cpp.cs580.webdata.parser.GamePageInfo wPI = steamJSONPage.getWebPageInfo();
 			retString += "Current Price: $" + wPI.getCurrentPrice() + "<hr>";
 			

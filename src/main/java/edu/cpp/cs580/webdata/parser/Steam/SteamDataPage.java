@@ -1,4 +1,4 @@
-package edu.cpp.cs580.webdata.parser;
+package edu.cpp.cs580.webdata.parser.Steam;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,6 +11,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import edu.cpp.cs580.webdata.parser.GameDataPage;
+import edu.cpp.cs580.webdata.parser.GamePageInfo;
+import edu.cpp.cs580.webdata.parser.ParserNotCompleteException;
+import edu.cpp.cs580.webdata.parser.WebPageInfoNotInitializedException;
 
 public class SteamDataPage extends GameDataPage {
 
@@ -52,7 +57,7 @@ public class SteamDataPage extends GameDataPage {
 	
 	public static void main(String[]args) throws ParserNotCompleteException, IOException, ParserNotCompleteException, WebPageInfoNotInitializedException
 	{
-		new SteamDataPage("http://store.steampowered.com/app/368500/");
+		//new SteamDataPage("http://store.steampowered.com/app/368500/");
 //		System.out.println(org.apache.commons.lang3.StringUtils.getJaroWinklerDistance("Assassin's Creed Black Flag", "Assassins Creed Black Flag"));
 //		System.out.println(org.apache.commons.lang3.StringUtils.getJaroWinklerDistance("Assassin's Creed Black Flag", "Assassin's Creed $ Black Flag"));
 //		String html = "<div class=\"game_purchase_action\">\n"+

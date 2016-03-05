@@ -5,19 +5,16 @@ import java.util.Map;
 
 public abstract class GameDataPage extends WebPage {
 
-//	protected Double currentPrice;
-//	protected Map<String, Object> gameAttributes;
 	protected GamePageInfo webPageInfo;
-//	protected String rawData;
-//	protected String pageURL;
 	protected String gameName;
+	protected Double gamePrice = null;
 	
 	public GameDataPage(String url) throws WebPageInfoNotInitializedException, IOException, ParserNotCompleteException
 	{
 		super(url);
 		parseWebPage(url);
 		if(webPageInfo == null) throw new WebPageInfoNotInitializedException();
-		if(rawData == null || pageURL == null || gameName == null) throw new ParserNotCompleteException();
+		if(gamePrice == null|| rawData == null || pageURL == null || gameName == null) throw new ParserNotCompleteException();
 	}
 	
 	/**
@@ -25,6 +22,11 @@ public abstract class GameDataPage extends WebPage {
 	 * with data parsed from the jsoup Document doc.
 	 */
 	public abstract void parseWebPage(String url);
+	
+	public double getPrice()
+	{
+		return gamePrice;
+	}
 	
 	public GamePageInfo getWebPageInfo()
 	{

@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 import edu.cpp.cs580.webdata.parser.*;
+import edu.cpp.cs580.webdata.parser.Steam.SteamJSONDataPage;
 
 
 public class SteamJSONDataPageTest {

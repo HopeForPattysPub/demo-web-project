@@ -25,6 +25,7 @@ public class WebPage {
 
 	protected void grabRawData()
 	{
+		if(pageURL == null) return;
 		URL urlObject;
 		Scanner scan;
 		String str = "";
