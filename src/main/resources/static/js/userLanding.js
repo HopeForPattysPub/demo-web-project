@@ -74,6 +74,7 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
 		$http.delete("/deleteNotification/" + username + "/" + itemID)
 			.success(function(data) {
 				$scope.pageOutput = data;
+                location.reload();
 			})
 			.error(function(data,status) {
 				$scope.pageOutput = 'Error';
@@ -86,6 +87,7 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
 		$http.post("/updateNotification/" + username + "/" + itemID + "/" + notifyPrice)
 			.success(function(data) {
 				$scope.pageOutput = data;
+                location.reload();
 			})
 			.error(function(data,status) {
 				$scope.pageOutput = 'Error';
