@@ -17,7 +17,7 @@ newAccountScreen.controller('newAccountInfoPage', function ($scope, $http) {
 	  else if(pw1 == pw2)
 	  {
 	       //alert("PW Match");
-	       var hash = CryptoJS.SHA1(pwString);
+	       var hash = CryptoJS.SHA512(pwString);
 	       //alert(hash);
 	       $http.get("/newaccount/" + $scope.emailToSearch + "/" + hash + "/" + $scope.userNameToSearch )
             
@@ -39,7 +39,7 @@ newAccountScreen.controller('newAccountInfoPage', function ($scope, $http) {
                else
                {
                   alert("Account successful created");
-                  window.location = "http://localhost:8080/login.html";
+                  window.location = "./login.html";
                }               
             })
             .error(function(data,status) {

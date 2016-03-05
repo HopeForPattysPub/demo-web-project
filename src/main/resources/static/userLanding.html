@@ -30,17 +30,21 @@
                <table border="1">
                    <tr>
                        <td>Game Name</td>
+                       <td>System</td>
                        <td>Retailer</td>
-                       <td>Current Price</td>
+                       <td>Price</td>
+                       <td>Date Updated</td>
                        <td>Notify Price</td>
                        <td>Update</td>
                        <td>Delete</td>
                    </tr>
 
                    <tr ng-repeat="item in items">
-                       <td>{{item.username}}</td>
-                       <td>{{item.itemID}}</td>
-                       <td>{{item.currentPrice}}</td>
+                       <td>{{item.title}}</td>
+                       <td>{{item.system}}</td>
+                       <td>{{item.storeName}}</td>
+                       <td>{{item.price}}</td>
+                       <td>{{item.priceDate}}</td>
                        <td>{{item.notifyPrice}}</td>
                        <td><button ng-click="updateItem(item.ItemID)">Update</button></td>
                        <td><button ng-click="deleteItem(item.ItemID)">Delete</button></td>

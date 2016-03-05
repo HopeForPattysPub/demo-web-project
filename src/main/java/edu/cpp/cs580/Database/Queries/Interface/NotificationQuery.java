@@ -3,6 +3,7 @@ package edu.cpp.cs580.Database.Queries.Interface;
 import java.util.List;
 import java.util.Map;
 
+import edu.cpp.cs580.Database.Objects.UserTrackItemjava;
 import edu.cpp.cs580.Database.Objects.Interfaces.Notification;
 
 public interface NotificationQuery {
@@ -32,7 +33,7 @@ public interface NotificationQuery {
 	 * @return			A map with all notifications for a single item. Key will be username.
 	 */
 	public Map<String, Notification> getNotifications(long itemID);
-	public List<Notification> getNotifications2(String username);
+	
 	/**
 	 * Gets a list of all notifications which are ready to be sent out. These notifications are at or
 	 * below their notify price.
@@ -52,4 +53,11 @@ public interface NotificationQuery {
 	 * @return			True if update is successful, false otherwise.
 	 */
 	public boolean updateNotification(Notification notice);
+	
+	/*
+	 * qeruies to get what items a user is tracking then lowest price of each item
+	 */
+	public List<Notification> getNotificationsItemList(String username);
+	public UserTrackItemjava getNotificationsLowestPrice(long itemID);
 }
+

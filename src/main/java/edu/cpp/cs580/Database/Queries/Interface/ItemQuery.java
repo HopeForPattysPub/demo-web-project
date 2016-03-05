@@ -3,6 +3,7 @@ package edu.cpp.cs580.Database.Queries.Interface;
 import java.util.List;
 import java.util.Map;
 
+import edu.cpp.cs580.Database.Objects.DBItem;
 import edu.cpp.cs580.Database.Objects.Interfaces.Item;
 
 public interface ItemQuery {

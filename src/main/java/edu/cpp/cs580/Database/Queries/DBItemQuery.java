@@ -54,22 +54,27 @@ public class DBItemQuery implements ItemQuery {
 
 	@Override
 	public Item getItem(long itemID) {
+		
+		
 		Connection connect = pool.getConnection();
-		String query = "SELECT * FROM awsdb.Items WHERE ItemID = ?";
+		String query = "SELECT * FROM awsdb.items WHERE ItemID = ?";
 		Item result = null;
 		
 		try {
 			PreparedStatement stmt = connect.prepareStatement(query);
 			stmt.setLong(1, itemID);
+			
 			ResultSet queryResult = stmt.executeQuery();
 			
 			//ItemID Exists so create Item. This assumes there is only one result since
 			//ItemID is Primary Key so there will only be one. Like Highlander.
+			
 			if (queryResult.next()) {
 				String resTitle = queryResult.getString("Title"),
 					   resSystemID = queryResult.getString("System");
 				long resItemID = queryResult.getLong("ItemID");
 				result = new DBItem(resItemID, resSystemID, resTitle);
+				
 			}
 			
 			stmt.close();

@@ -4,7 +4,7 @@ import edu.cpp.cs580.Database.Objects.Interfaces.Item;
 
 public class DBItem implements Item {
 	/******************Data Members*******************/
-	private long	 itemID;
+	private long itemID;
 	private String system;
 	private String title;
 	
