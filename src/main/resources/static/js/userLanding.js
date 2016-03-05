@@ -56,12 +56,16 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
 	$scope.addItem = function(itemID) {
 		var username = getUserName();
 		var notifyPrice = window.prompt("Notification Price", 0);
-		$http.post("/addNotification/" + username + "/" + itemID + "/" + notifyPrice)
+		$http.post("/addUserNotification/" + username + "/" + itemID + "/" + notifyPrice)
 			.success(function(data) {
 				$scope.pageOutput = data;
+				location.reload();
+				
+							
 			})
 			.error(function(data,status) {
 				$scope.pageOutput = 'Error';
+				
 			});
 	}
 });

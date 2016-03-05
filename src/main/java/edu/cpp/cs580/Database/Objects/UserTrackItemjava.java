@@ -14,6 +14,7 @@ public class UserTrackItemjava {
 	private String title;
 	private String system;
 	private double notifyPrice;
+	private long itemID;
 	
 	/******************Constructors*******************/
 	/**
@@ -27,6 +28,7 @@ public class UserTrackItemjava {
 		title = null;
 		system = null;
 		notifyPrice = 0;
+		itemID = 0;
 	}
 	
 	/**
@@ -38,8 +40,9 @@ public class UserTrackItemjava {
 	 * @param stPrID	Product ID used by store for item
 	 * @param ur	Item URL in store
 	 */
-	public UserTrackItemjava(double price, Timestamp priceDate,	String url, String storeName, String title, String system, double notifyPrice)
+	public UserTrackItemjava(long itemID, double price, Timestamp priceDate,	String url, String storeName, String title, String system, double notifyPrice)
 	{
+		this.itemID = itemID;
 		this.priceDate = priceDate;
 		this.url = url;
 		this.storeName = storeName;
@@ -48,6 +51,16 @@ public class UserTrackItemjava {
 		this.system = system;
 		this.priceDate = priceDate;
 		this.notifyPrice = notifyPrice;
+	}
+	
+	public long getItemID()
+	{
+		return this.itemID;
+	}
+	
+	public void SetItemID(long itemID)
+	{
+		this.itemID = itemID;
 	}
 	
 	public void SetPrice(double price)

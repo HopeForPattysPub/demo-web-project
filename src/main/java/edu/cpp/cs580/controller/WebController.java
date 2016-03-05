@@ -160,6 +160,7 @@ public class WebController {
 				lowestPriceObject.SetURL(currentStoreItem.getURL());
 				lowestPriceObject.SetPrice(currentStoreItem.getPrice());
 				lowestPriceObject.SetSystem(currentItem.getSystem());
+				lowestPriceObject.SetItemID(currentStoreItem.getItemID());
 				lowestPriceObject.SetTitle(currentItem.getTitle());
 				TopGamesList.add(lowestPriceObject);
 				
@@ -241,6 +242,7 @@ public class WebController {
 			lowestPriceObject.SetNotifyPrice(x.getNotifyPrice());
 			lowestPriceObject.SetSystem(currentItem.getSystem());
 			lowestPriceObject.SetTitle(currentItem.getTitle());
+			lowestPriceObject.SetItemID(itemID);
 			userTrackItemList.add(lowestPriceObject);
 		}
 		
