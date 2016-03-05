@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import edu.cpp.cs580.Database.Queries.DBItemQuery;
 import edu.cpp.cs580.Database.Queries.DBNotificationQuery;
+import edu.cpp.cs580.Database.Queries.DBStoreProductQuery;
 import edu.cpp.cs580.Database.Queries.DBStoreQuery;
 import edu.cpp.cs580.Database.Queries.DBUserQuery;
 import edu.cpp.cs580.Database.Queries.Interface.UserQuery;
@@ -31,6 +32,12 @@ public class App {
         return userManager;
     }
 
+    @Bean
+    public DBStoreProductQuery dbStoreProductQuery() {
+   	 DBStoreProductQuery dbStoreProductQuery = new DBStoreProductQuery();
+        return dbStoreProductQuery;
+    }
+    
     @Bean
     public DBNotificationQuery dbNotificationQuery() {
    	 DBNotificationQuery dbNotificationQuery  = new DBNotificationQuery();
