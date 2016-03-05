@@ -126,13 +126,13 @@ public class WebController {
 		if(dbItemQuery.getItems("Title", dataPage.getGameName()).size() == 0)
 			dbItemQuery.addItem("PC", dataPage.getGameName());
 		
-		Item item = dbItemQuery.getItems("Title", dataPage.getGameName()).values().iterator().next();
-		
+		Item item = dbItemQuery.getItem(dataPage.getGameName(),"PC");
+		System.out.println("created item" + item);
 		dbStoreIDQuery.addStoreProduct(new DBStoreProduct(item.getItemID(), 
 															dataPage.getPrice(), 
 															new Timestamp((new java.util.Date()).getTime()), 
 															store, 
-															dataPage.getStoreID(), 
+															storeID, 
 															dataPage.getPageURL()));
 		return true;
 	}
@@ -162,7 +162,7 @@ public class WebController {
 			if(currentStoreItem == null)
 			{
 				System.out.print("first query null");
-				//System.out.println(addStoreProduct(1, storeItemID));
+				addStoreProduct(1, storeItemID);
 				currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);				
 			}
 			System.out.print(currentStoreItem);
