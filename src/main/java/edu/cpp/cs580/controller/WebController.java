@@ -273,7 +273,7 @@ public class WebController {
 	@RequestMapping(value = "/updateNotification/{userName}/{itemID}/{noticePrice}", method = RequestMethod.POST)
 	boolean updateNotification(@PathVariable("userName") String uName, @PathVariable("itemID") long itemID, @PathVariable("noticePrice") double nPrice) {
 		Notification note = new DBNotification(itemID, nPrice, uName);
-		return dbNotificationQuery.addNotification(note);
+		return dbNotificationQuery.updateNotification(note);
 	}
 	
 	/**
