@@ -256,6 +256,17 @@ public class WebController {
 		return results;
 	}
 	
+	@RequestMapping(value = "/deleteNotification/{username}/{itemID}", method = RequestMethod.DELETE)
+	void deleteNotification(@PathVariable("username") String uName, @PathVariable("itemID") long itemID) {
+		dbNotificationQuery.removeNotification(uName, itemID);
+	}
+	
+	@RequestMapping(value = "/updateNotification/{userName}/{itemID}/{noticePrice}", method = RequestMethod.POST)
+	boolean updateNotification(@PathVariable("userName") String uName, @PathVariable("itemID") long itemID, @PathVariable("noticePrice") double nPrice) {
+		Notification note = new DBNotification(itemID, nPrice, uName);
+		return dbNotificationQuery.addNotification(note);
+	}
+	
 	/**
 	 * This is an example of sending an HTTP POST request to
 	 * update a user's information (or create the user if not

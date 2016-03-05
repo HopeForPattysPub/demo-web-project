@@ -68,5 +68,28 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
 				
 			});
 	}
+
+	$scope.deleteItem = function(itemID) {
+		var username = getUserName();
+		$http.delete("/deleteNotification/" + username + "/" + itemID)
+			.success(function(data) {
+				$scope.pageOutput = data;
+			})
+			.error(function(data,status) {
+				$scope.pageOutput = 'Error';
+			});
+	}
+
+	$scope.updateItem = function(itemID) {
+		var username = getUserName();
+		var notifyPrice = window.prompt("New Price", 0);
+		$http.post("/updateNotification/" + username + "/" + itemID + "/" + notifyPrice)
+			.success(function(data) {
+				$scope.pageOutput = data;
+			})
+			.error(function(data,status) {
+				$scope.pageOutput = 'Error';
+			});
+	}
 });
 
