@@ -1,5 +1,8 @@
 package edu.cpp.cs580.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.common.hash.HashCode;
@@ -107,8 +111,9 @@ public class WebController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getWelcomePage() {
 		ModelAndView mav = new ModelAndView("welcome.html");
-		//TODO: Add results for tracking
 		return mav;
+		//TODO: Add results for tracking
+//		return mav;
 	}
 	
 	/**
@@ -134,7 +139,8 @@ public class WebController {
 	 */
 	@RequestMapping(value = "/getUserNotifications/{userName}", method = RequestMethod.GET)
 	String getNotification(@PathVariable("userName") String userName) {
-		//System.out.println("In query");
+//	String getNotification(String userName) {
+//		System.out.println("In query");
 		List<UserTrackItemjava> userTrackItemList = new ArrayList<UserTrackItemjava>();
 		List<Notification> NotificationList = dbNotificationQuery.getNotificationsItemList(userName);
 		System.out.println(NotificationList.toString());
@@ -166,7 +172,6 @@ public class WebController {
 		results = jsonCartList;
 		
 		return results;
-		
 	}
 	
 	/**
@@ -287,11 +292,18 @@ public class WebController {
 	 * @throws ClassNotFoundException 
 	 */
 	@RequestMapping(value = "/login/{Pw}/{Uname}", method = RequestMethod.GET)
-	int claudeLogin(@PathVariable("Pw") String Pw, @PathVariable("Uname") String Uname) throws SQLException {
+	int claudeLogin(@PathVariable("Pw") String Pw, @PathVariable("Uname") String Uname, HttpServletResponse response) throws SQLException {
       boolean result = dbUserQuery.loginUser(Uname, Pw);
       
       if (result)
+      {
+    	  Cookie userCookie = new Cookie("gameTrackerUser", Uname); //bake cookie
+    	  userCookie.setMaxAge(86400); //set expire time to 1 day
+    	  userCookie.setPath("/");
+    	  response.addCookie(userCookie); //put cookie in response 
+    	  
     	  return 1;
+      }
       return 0;
 	}
 	

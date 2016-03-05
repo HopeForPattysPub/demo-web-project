@@ -31,7 +31,8 @@ LoginScreen.controller('loginInfoPage', function ($scope, $http) {
                }
                else if (data == 1)
                {
-                  window.location.replace("./userLanding.html?userName=" + un);
+//            	   window.location.replace("./userLanding.html?userName=" + un);
+            	   window.location.replace("./userLanding.html");
                }
               
             })
