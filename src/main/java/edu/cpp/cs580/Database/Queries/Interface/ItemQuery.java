@@ -20,6 +20,8 @@ public interface ItemQuery {
 	 * @return			An item object which holds result. NULL if not found
 	 */
 	public Item getItem(long itemID);
+	
+	public Item getItem(String title, String systemID);
 	/**
 	 * Get multiple items. May be zero or more depending on query results. The systemID
 	 * or title can be used.
