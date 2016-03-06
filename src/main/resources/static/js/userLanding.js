@@ -47,9 +47,10 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
 	  	.success(function(data) {
           $scope.QueryList = data;
 	  	})
-	  	.error(function(data,status) {
+		.error(function(data,status) {
 	  		$scope.pageOutput = 'Error';
-	  	});
+  	    });
+  	}
   
   
   $scope.parseUser = function() {
