@@ -241,7 +241,7 @@ public class DBNotificationQuery implements NotificationQuery {
 	@Override
 	public List<Notification> getNotificationsItemList(String username) {
 		Connection connect = pool.getConnection();
-		String query = "select t1.* from awsdb.notifications as t1 where t1.Username = ? group by t1.ItemID";
+		String query = "select t1.* from awsdb.Notifications as t1 where t1.Username = ? group by t1.ItemID";
 		List<Notification> result = new ArrayList<Notification>();
 		PreparedStatement stmt = null;
 		
@@ -270,7 +270,7 @@ public class DBNotificationQuery implements NotificationQuery {
 	@Override
 	public UserTrackItemjava getNotificationsLowestPrice(long itemID) {
 		Connection connect = pool.getConnection();
-		String query = "Select t1.*, t2.* from awsdb.storeproducts as t1 join awsdb.stores as t2 on t2.StoreID = t1.StoreID where ItemID = ? and Price = ( select min(Price) from awsdb.storeproducts where ItemID = ?) limit 1";
+		String query = "Select t1.*, t2.* from awsdb.StoreProducts as t1 join awsdb.Stores as t2 on t2.StoreID = t1.StoreID where ItemID = ? and Price = ( select min(Price) from awsdb.StoreProducts where ItemID = ?) limit 1";
 		UserTrackItemjava result = new UserTrackItemjava();
 		PreparedStatement stmt = null;
 		

@@ -23,7 +23,7 @@ public class DBItemQuery implements ItemQuery {
 	@Override
 	public boolean addItem(String systemID, String title) {
 		Connection connect = pool.getConnection();
-		String insertQuery = "INSERT INTO awsdb.items(Title, System, ItemID) VALUES(?,?,?)";
+		String insertQuery = "INSERT INTO awsdb.Items(Title, System, ItemID) VALUES(?,?,?)";
 		boolean result = true;
 		
 		PreparedStatement stmt = null;
@@ -57,7 +57,7 @@ public class DBItemQuery implements ItemQuery {
 		
 		
 		Connection connect = pool.getConnection();
-		String query = "SELECT * FROM awsdb.items WHERE ItemID = ?";
+		String query = "SELECT * FROM awsdb.Items WHERE ItemID = ?";
 		Item result = null;
 		
 		try {
@@ -91,7 +91,7 @@ public class DBItemQuery implements ItemQuery {
 		
 		
 		Connection connect = pool.getConnection();
-		String query = "SELECT * FROM awsdb.items WHERE Title = ? AND System = ?";
+		String query = "SELECT * FROM awsdb.Items WHERE Title = ? AND System = ?";
 		Item result = null;
 		
 		try {
