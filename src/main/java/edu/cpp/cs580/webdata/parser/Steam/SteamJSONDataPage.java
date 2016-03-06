@@ -66,7 +66,10 @@ public class SteamJSONDataPage extends GameDataPage {
 		JSONObject obj = new JSONObject(getRawPageData());
 		if(obj.getJSONObject(""+appid).getBoolean("success") == false) return;
 		JSONObject results = obj.getJSONObject(""+appid).getJSONObject("data");
-		currentPrice = (double)results.getJSONObject("price_overview").getInt("final")/100.0;
+		
+		currentPrice = 0.0;
+		if(results.has("price_overview"))
+			currentPrice = (double)results.getJSONObject("price_overview").getInt("final")/100.0;
 		
 		gameAttributes.put("description_string", results.getString("about_the_game"));
 		gameDescription = results.getString("about_the_game");
@@ -80,21 +83,28 @@ public class SteamJSONDataPage extends GameDataPage {
 		{
 			gameMinReq = null;
 			gameRecReq = null;
-			if(results.getJSONObject("pc_requirements").has("minimum"))
+			
+			if(results.get("pc_requirements") instanceof JSONObject &&
+					results.getJSONObject("pc_requirements").has("minimum"))
 			{
 				gameAttributes.put("pc_requirements_min_string", results.getJSONObject("pc_requirements").getString("minimum"));
 				gameMinReq = results.getJSONObject("pc_requirements").getString("minimum");
 			}
-			if(results.getJSONObject("pc_requirements").has("recommended"))
+			if(results.get("pc_requirements") instanceof JSONObject &&
+					results.getJSONObject("pc_requirements").has("recommended"))
 			{
 				gameAttributes.put("pc_requirements_rec_string", results.getJSONObject("pc_requirements").getString("recommended"));
 				gameRecReq = results.getJSONObject("pc_requirements").getString("recommended");
 			}
 		}
 		
-		gameAttributes.put("initial_price_double", (double)results.getJSONObject("price_overview").getInt("initial")/100.0);
-		gameInitialPrice = (double)results.getJSONObject("price_overview").getInt("initial")/100.0;
-		
+		gameInitialPrice = 0.0;
+		gameAttributes.put("initial_price_double", 0);
+		if(results.has("price_overview"))
+		{
+			gameAttributes.put("initial_price_double", (double)results.getJSONObject("price_overview").getInt("initial")/100.0);
+			gameInitialPrice = (double)results.getJSONObject("price_overview").getInt("initial")/100.0;
+		}
 		gameAttributes.put("release_date_string", results.getJSONObject("release_date").getString("date"));
 		releaseDate = results.getJSONObject("release_date").getString("date");
 		
@@ -103,19 +113,20 @@ public class SteamJSONDataPage extends GameDataPage {
 		while(pIt.hasNext()) pList.add((String)pIt.next());
 		gameAttributes.put("publishers_list", pList);
 		gamePublishers = new ArrayList<>(pList);
-		
-		Iterator<Object> edIt = ((JSONObject)results.getJSONArray("package_groups").get(0)).getJSONArray("subs").iterator();
-		int count = 0;
-		while(edIt.hasNext())
+		if((results.getJSONArray("package_groups")).length() > 0)
 		{
-			count++;
-			JSONObject edition = (JSONObject)edIt.next();
-			String editionName = edition.getString("option_text").split(" - ")[0];
-			double editionPrice = (double)edition.getInt("price_in_cents_with_discount")/100.0;
-			gameAttributes.put("edition_name_" + count + "_string", editionName);
-			gameAttributes.put("edition_price_" + count + "_double", editionPrice);
+			Iterator<Object> edIt = ((JSONObject)results.getJSONArray("package_groups").get(0)).getJSONArray("subs").iterator();
+			int count = 0;
+			while(edIt.hasNext())
+			{
+				count++;
+				JSONObject edition = (JSONObject)edIt.next();
+				String editionName = edition.getString("option_text").split(" - ")[0];
+				double editionPrice = (double)edition.getInt("price_in_cents_with_discount")/100.0;
+				gameAttributes.put("edition_name_" + count + "_string", editionName);
+				gameAttributes.put("edition_price_" + count + "_double", editionPrice);
+			}
 		}
-		
 		Iterator<Object> catIt = results.getJSONArray("categories").iterator();
 		List<String> catList = new ArrayList<>();
 		while(catIt.hasNext()) catList.add(((JSONObject)catIt.next()).getString("description"));

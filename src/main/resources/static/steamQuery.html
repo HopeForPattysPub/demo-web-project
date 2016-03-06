@@ -22,11 +22,30 @@
 	        <div>
 	            <b><label>Steam Query Test</label></b>
 	            <br>
-<!-- 	            Enter a Query
+	            Enter a Query
 	            <br>
-	            <input type="text" id="appid" ng-model="appidToSearch"><button ng-click="parseQuery()">Get</button>
+	            <input type="text" id="qu" ng-model="query"><button ng-click="parseQuery()">Get</button>
 	            <br><hr><br>
-				<p ng-bind-html="pageOutput"></p>
+				<div>
+               <label>Popular Games</label>
+               <table border="1">
+                   <tr>
+                       <td>Title</td>
+                       <td>System</td>
+                       <td>Price</td>
+                       <td>Track</td>
+                       
+                   </tr>
+
+                   <tr ng-repeat="iD in QueryList">
+                       <td>{{iD.title}}</td>
+                       <td>{{iD.system}}</td>
+                       <td>{{iD.price}}</td>
+                       <td><button ng-click="addItem(iD.itemID)">ADD</button></td>
+                   </tr>
+               </table>
+           </div>
+
 	        </div>
 	    </div>
 

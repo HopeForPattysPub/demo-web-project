@@ -128,7 +128,7 @@ public class WebController {
 			dbItemQuery.addItem("PC", dataPage.getGameName());
 		
 		Item item = dbItemQuery.getItem(dataPage.getGameName(),"PC");
-		System.out.println("created item" + item);
+		System.out.println(dataPage.getGameName() + " created item" + item);
 		return dbStoreIDQuery.addStoreProduct(new DBStoreProduct(item.getItemID(), 
 															dataPage.getPrice(), 
 															new Timestamp((new java.util.Date()).getTime()), 
@@ -144,16 +144,33 @@ public class WebController {
 		SteamQueryPage queryPage = new SteamQueryPage(query);
 		List<String> names = queryPage.getNames();
 		List<UserTrackItemjava> queryItemsList = new ArrayList<UserTrackItemjava>();
-		
-		Item currentItem = null;
-		UserTrackItemjava matchedQueryObject = null;
-		names.forEach(n -> {
-			String storeItemID = ""+queryPage.getAppID(n);
-			StoreProduct currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
+		names.subList(0, 5).forEach(n -> {
+			UserTrackItemjava matchedQueryObject = new UserTrackItemjava();;
 			
-			if(currentStoreItem != null)
+			String storeItemID = ""+queryPage.getAppID(n);
+			System.out.println("========== " + storeItemID);
+			StoreProduct currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
+			if(currentStoreItem == null) {
+				addStoreProduct(1, storeItemID);
+				currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
+			}
+			Item currentItem =  dbItemQuery.getItem(currentStoreItem.getItemID());
+			matchedQueryObject.SetURL(currentStoreItem.getURL());
+			matchedQueryObject.SetPrice(currentStoreItem.getPrice());
+			matchedQueryObject.SetSystem(currentItem.getSystem());
+			matchedQueryObject.SetItemID(currentStoreItem.getItemID());
+			matchedQueryObject.SetTitle(currentItem.getTitle());
+			queryItemsList.add(matchedQueryObject);
 		});
-		return null;
+		
+		String results = null;
+		Gson gson = new Gson();
+		String jsonCartList = gson.toJson(queryItemsList);
+		System.out.println("{\"items\":" + jsonCartList + "}");
+		//results = "{\"items\":" + jsonCartList + "}";
+		results = jsonCartList;
+		
+		return results;
 	}
 	
 	@RequestMapping(value = "/steamTopPage", method = RequestMethod.GET)
@@ -173,10 +190,6 @@ public class WebController {
 			System.out.println(x.toString());
 			storeItemID = Integer.toString(x);
 			currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
-			
-			
-			
-			
 			
 			if(currentStoreItem == null)
 			{

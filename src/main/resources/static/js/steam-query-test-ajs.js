@@ -1,14 +1,13 @@
 // This is the version used for the HTML home-ajs.html with AngularJS
 // This is the trending technology
-var SteamParseTest = angular.module('SteamParseTest', ['ngSanitize']);
+var SteamQueryTest = angular.module('SteamQueryTest', ['ngSanitize']);
 
-SteamParseTest.controller('SteamInfoPage', function ($scope, $http) {
+SteamQueryTest.controller('SteamInfoPage', function ($scope, $http) {
   
-  $scope.parseQueryJSON = function() {
-     alert("Entered in function");
-     $http.get("/parser/steam/query/" + $scope.appidToSearch, {headers: { 'Accept': 'application/html' }})
+  $scope.parseQuery = function() {
+     $http.get("/parser/steam/query/" + $scope.query, {headers: { 'Accept': 'application/html' }})
 	  	.success(function(data) {
-	  		$scope.pageOutput = data;
+          $scope.QueryList = data;
 	  	})
 	  	.error(function(data,status) {
 	  		$scope.pageOutput = 'Error';

@@ -32,9 +32,9 @@ public class SteamQueryPage extends QueryPage {
 			Document doc = Jsoup.connect(getPageURL()).timeout(600000).maxBodySize(0)
 					.userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36").cookie("birthtime", "568022401")
 			        .get();
-			Elements result = doc.select("div#search_result_container").select("a[href]");
+			Elements result = doc.select("div#search_result_container").select("a[data-ds-appid]");
 			result.forEach(item -> linksMap.put(item.select("span.title").first().text(), item.attr("href")));
-			result.forEach(item -> appIDMap.put(item.select("span.title").first().text(), Integer.parseInt(item.attr("data-ds-appid"))));
+			result.forEach(item -> appIDMap.put(item.select("span.title").first().text(), Integer.parseInt(item.attr("data-ds-appid").split(",")[0])));
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
@@ -63,8 +63,8 @@ public class SteamQueryPage extends QueryPage {
 	}
 	
 	public static void main(String[] args) {
-		SteamQueryPage test = new SteamQueryPage("assassin's creed unity");
+		SteamQueryPage test = new SteamQueryPage("test");
 		List<String> list = test.getNames();
-		list.forEach(n -> System.out.println(n + "\t" +test.getLink(n)));
+		list.forEach(n -> System.out.println(n + "\t" +test.getLink(n) + "\t" +test.getAppID(n)));
 	}
 }

@@ -41,6 +41,15 @@ UserLanding.controller('UserLandingPage', function ($scope, $http) {
       
       
    }
+   
+   $scope.parseQuery = function() {
+     $http.get("/parser/steam/query/" + $scope.query, {headers: { 'Accept': 'application/html' }})
+	  	.success(function(data) {
+          $scope.QueryList = data;
+	  	})
+	  	.error(function(data,status) {
+	  		$scope.pageOutput = 'Error';
+	  	});
   
   
   $scope.parseUser = function() {
