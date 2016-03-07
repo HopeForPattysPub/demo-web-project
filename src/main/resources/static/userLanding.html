@@ -19,7 +19,6 @@
       
 	    <div>
 	        <div id="Welcome">
-	            
 	        </div>
       
 	        <hr>
@@ -56,15 +55,16 @@
             
             
 	      
-	            <b><label>Steam Query Test</label></b>
+	            <b><label>Game Query</label></b>
 	            <br>
-	            Enter a Query
-	            <br>
+	            Enter a Query 
 	            <input type="text" id="qu" ng-model="query"><button ng-click="parseQuery()">Get</button>
+	            <br><br>
 		<div>
                <label>Queried Games</label>
                <table border="1"> <!--style="visibility:hidden" -->
                    <tr>
+                       <td></td>
                        <td>Title</td>
                        <td>System</td>
                        <td>Price</td>
@@ -73,6 +73,7 @@
                    </tr>
 
                    <tr ng-repeat="iD in QueryList">
+                       <td><img src="{{iD.headerImageURL}}" style="width:120px;height:45px;"></td>
                        <td>{{iD.title}}</td>
                        <td>{{iD.system}}</td>
                        <td>{{iD.price}}</td>
@@ -86,6 +87,7 @@
                <label>Popular Games</label>
                <table border="1">
                    <tr>
+                       <td></td>
                        <td>Title</td>
                        <td>System</td>
                        <td>Price</td>
@@ -94,6 +96,7 @@
                    </tr>
 
                    <tr ng-repeat="iD in TopList">
+                       <td><img src="{{iD.headerImageURL}}" style="width:120px;height:45px;"></td>
                        <td>{{iD.title}}</td>
                        <td>{{iD.system}}</td>
                        <td>{{iD.price}}</td>

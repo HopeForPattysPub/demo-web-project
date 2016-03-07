@@ -17,12 +17,14 @@ import edu.cpp.cs580.webdata.parser.QueryPage;
 public class SteamQueryPage extends QueryPage {
 
 	private final static String BASEURL = "http://store.steampowered.com/search/?snr=1_4_4__12&term=";
-	private LinkedHashMap<String,String> linksMap;
+	private LinkedHashMap<String,String>   linksMap;
 	private LinkedHashMap<String, Integer> appIDMap;
+	private LinkedHashMap<String, String> imageMap;
 	public SteamQueryPage(String query) {
 		super(query);
 		linksMap = new LinkedHashMap<>();
 		appIDMap = new LinkedHashMap<>();
+		imageMap = new LinkedHashMap<>();
 		parseQueryPage();
 	}
 	
@@ -35,6 +37,7 @@ public class SteamQueryPage extends QueryPage {
 			Elements result = doc.select("div#search_result_container").select("a[data-ds-appid]");
 			result.forEach(item -> linksMap.put(item.select("span.title").first().text(), item.attr("href")));
 			result.forEach(item -> appIDMap.put(item.select("span.title").first().text(), Integer.parseInt(item.attr("data-ds-appid").split(",")[0])));
+			result.forEach(item -> imageMap.put(item.select("span.title").first().text(), item.select("img").attr("src")));
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
@@ -54,6 +57,11 @@ public class SteamQueryPage extends QueryPage {
 	{
 		return linksMap.get(name);
 	}
+	
+	public String getImage(String name)
+	{
+		return imageMap.get(name);
+	}
 
 	@Override
 	protected String getURL(String query) {
@@ -65,6 +73,6 @@ public class SteamQueryPage extends QueryPage {
 	public static void main(String[] args) {
 		SteamQueryPage test = new SteamQueryPage("test");
 		List<String> list = test.getNames();
-		list.forEach(n -> System.out.println(n + "\t" +test.getLink(n) + "\t" +test.getAppID(n)));
+//		list.forEach(n -> System.out.println(n + "\t" +test.getLink(n) + "\t" +test.getAppID(n)));
 	}
 }

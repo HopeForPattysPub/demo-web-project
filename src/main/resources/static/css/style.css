@@ -2,6 +2,11 @@ table {
     border-collapse: collapse;
 }
 
+div.inline-div { display:inline; }
+
+p.alignleft { float:left; }
+p.alignright { float:right; }
+
 table, th, td {
     border: 1px solid black;
 }

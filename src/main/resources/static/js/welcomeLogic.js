@@ -12,23 +12,16 @@ function getUserName() {
 	return "$%notset%$";
 }
 
-welcomeScreen.controller('welcomeInfopage', function ($scope, $http) {
+welcomeScreen.controller('welcomeInfoPage', function ($scope, $http) {
 	
 	$scope.usercheck = function() {
-		if(getUserName != "$%notset%$") window.location.replace("./userLanding.html");
+		if(getUserName() != "$%notset%$") window.location.replace("./userLanding.html");
+		
+	      $http.get("/steamTopPage")
+	      .success(function(data){
+	         
+	         $scope.TopList = data;
+	      });
 	}
-
-  $scope.parseSteamJSON = function() {
-	  $http.get("/parser/steam/" + $scope.appidToSearch, {headers: { 'Accept': 'application/html' }})
-	  	.success(function(data) {
-	  		$scope.pageOutput = data;
-	  		//368500 - Assassin's Creed appid
-	  		//248330 - Dino Run DX appid
-	  	})
-	  	.error(function(data,status) {
-	  		$scope.pageOutput = 'Error';
-	  	});
-	   location.reload(true);
-  }
 
 });

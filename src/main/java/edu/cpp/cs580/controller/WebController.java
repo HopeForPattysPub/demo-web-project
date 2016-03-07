@@ -148,7 +148,10 @@ public class WebController {
 			UserTrackItemjava matchedQueryObject = new UserTrackItemjava();;
 			
 			String storeItemID = ""+queryPage.getAppID(n);
-			System.out.println("========== " + storeItemID);
+			String imageLink = queryPage.getImage(n);
+			System.out.println(imageLink);
+			
+//			System.out.println("========== " + storeItemID);
 			StoreProduct currentStoreItem = dbStoreIDQuery.getSingleProduct(1, storeItemID);
 			if(currentStoreItem == null) {
 				addStoreProduct(1, storeItemID);
@@ -160,6 +163,7 @@ public class WebController {
 			matchedQueryObject.SetSystem(currentItem.getSystem());
 			matchedQueryObject.SetItemID(currentStoreItem.getItemID());
 			matchedQueryObject.SetTitle(currentItem.getTitle());
+			matchedQueryObject.setHeaderImageURL(imageLink);
 			queryItemsList.add(matchedQueryObject);
 		});
 		
@@ -200,6 +204,7 @@ public class WebController {
 			System.out.print(currentStoreItem);
 			currentItem =  dbItemQuery.getItem(currentStoreItem.getItemID());
 			lowestPriceObject = new UserTrackItemjava();
+			lowestPriceObject.setHeaderImageURL(test.getLink(x));
 			lowestPriceObject.SetURL(currentStoreItem.getURL());
 			lowestPriceObject.SetPrice(currentStoreItem.getPrice());
 			lowestPriceObject.SetSystem(currentItem.getSystem());
@@ -439,6 +444,12 @@ public class WebController {
     	  return 1;
       }
       return 0;
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	void logout(HttpServletResponse response)
+	{
+		
 	}
 	
 	/**

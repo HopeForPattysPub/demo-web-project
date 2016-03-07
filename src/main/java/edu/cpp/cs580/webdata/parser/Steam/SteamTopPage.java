@@ -10,8 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -25,9 +26,21 @@ public class SteamTopPage extends TopPage {
 
 	//"http://store.steampowered.com/search/?filter=topsellers#sort_by=_ASC&page=1";
 
+	private Map<Integer, String> imageLink;
+	
+	public SteamTopPage()
+	{
+		super();
+	}
+	
+	public String getLink(int appid)
+	{
+		return imageLink.get(appid);
+	}
+	
 	private Set<Integer> parseTopPage(String url)
 	{
-		Set<Integer> retList = new HashSet<>();
+		Set<Integer> retList = new LinkedHashSet<>();
 		try {
 			Document doc = Jsoup.connect(url).timeout(600000).maxBodySize(0)
 					.userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36").cookie("birthtime", "568022401")
@@ -36,8 +49,15 @@ public class SteamTopPage extends TopPage {
 			result.forEach(item -> {
 				String appids = item.select("a").first().attr("data-ds-appid");
 				List<String> split = new ArrayList<>(Arrays.asList(appids.split(",")));				
-				if(split.size() < 4) 
-					split.forEach(s -> retList.add(Integer.parseInt(s)));
+				if(split.size() < 4)
+					split.forEach(s -> {
+						retList.add(Integer.parseInt(s));
+//						if(item.select("div.col").select("img") == null)
+//							System.out.println(item.select("div.col").select("img").attr("src"));
+//						System.out.println(Integer.parseInt(s)+ "\t" + item.select("div.col").select("img").attr("src"));
+						imageLink.put(Integer.parseInt(s), item.select("div.col").select("img").attr("src"));
+					});
+						
 			});
 		} catch (IOException e) { e.printStackTrace(); }
 		System.out.println(url + "\t" + retList.size());
@@ -46,7 +66,8 @@ public class SteamTopPage extends TopPage {
 	
 	@Override
 	protected List<Integer> getTopList() {
-		Set<Integer> retList = new HashSet<>();
+		imageLink = new java.util.HashMap<>();
+		Set<Integer> retList = new LinkedHashSet<>();
 		for (int i = 1; i <= 4; i++) {
 			String url = "http://store.steampowered.com/search/?filter=topsellers#sort_by=_ASC&page=" + i;
 			retList.addAll(parseTopPage(url));
@@ -56,7 +77,7 @@ public class SteamTopPage extends TopPage {
 	
 	public static void main(String[] args) {
 		SteamTopPage test = new SteamTopPage();
-		test.getTopGameIDList().forEach(i -> System.out.println(i));
+		test.getTopGameIDList().forEach(i -> System.out.println(i + "\t" + test.getLink(i)));
 		
 	}
 }

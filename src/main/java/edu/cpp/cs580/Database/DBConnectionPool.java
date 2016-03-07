@@ -23,11 +23,12 @@ public class DBConnectionPool {
 		try {
 			cpds = new ComboPooledDataSource();
 			cpds.setDriverClass("com.mysql.jdbc.Driver");
-			cpds.setJdbcUrl("jdbc:mysql://awsdb.cxvgok9uespx.us-west-2.rds.amazonaws.com:3306/awsdb");	//TODO: Change this once moved to AWS
-			//cpds.setJdbcUrl("jdbc:mysql://localhost:3306/awsdb");
+//			cpds.setJdbcUrl("jdbc:mysql://awsdb.cxvgok9uespx.us-west-2.rds.amazonaws.com:3306/awsdb");	//TODO: Change this once moved to AWS
+			cpds.setJdbcUrl("jdbc:mysql://localhost:3306/awsdb");
 			cpds.setUser("root");
 			//cpds.setPassword("admin");
-			cpds.setPassword("awsDBPassword");
+//			cpds.setPassword("awsDBPassword");
+			cpds.setPassword("6975+Abc");
 			cpds.setMaxPoolSize(50);
 			cpds.setMinPoolSize(10);
 			cpds.setAcquireIncrement(1);

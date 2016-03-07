@@ -3,7 +3,7 @@
 	<head>
 	   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
-	    <script src="/js/steam-parse-test-ajs.js"></script>
+	    <script src="/js/welcomeLogic.js"></script>
 	    <link rel="stylesheet" type="text/css" href="/css/style.css">
 	</head>
 
@@ -25,11 +25,26 @@
 	        <hr>
 
 	        <div>
-	            <b><label>Below at the top games and their price tracking</label></b>
-	            
+               <label>Popular Games</label>
+               <table border="1">
+                   <tr>
+                       <td></td>
+                       <td>Title</td>
+                       <td>System</td>
+                       <td>Price</td>
+                       
+                       
+                   </tr>
 
-				<p ng-bind-html="pageOutput"></p>
-	        </div>
+                   <tr ng-repeat="iD in TopList">
+                       <td><img src="{{iD.headerImageURL}}" style="width:120px;height:45px;"></td>
+                       <td>{{iD.title}}</td>
+                       <td>{{iD.system}}</td>
+                       <td>{{iD.price}}</td>
+                       
+                   </tr>
+               </table>
+           </div>
 	    </div>
 
 	</body>

@@ -15,6 +15,7 @@ public class UserTrackItemjava {
 	private String system;
 	private double notifyPrice;
 	private long itemID;
+	private String headerImageURL;
 	
 	/******************Constructors*******************/
 	/**
@@ -29,6 +30,7 @@ public class UserTrackItemjava {
 		system = null;
 		notifyPrice = 0;
 		itemID = 0;
+		headerImageURL = null;
 	}
 	
 	/**
@@ -51,6 +53,20 @@ public class UserTrackItemjava {
 		this.system = system;
 		this.priceDate = priceDate;
 		this.notifyPrice = notifyPrice;
+	}
+	
+	public UserTrackItemjava(long itemID, double price, Timestamp priceDate,	String url, String storeName, String title, String system, double notifyPrice, String headerImageURL)
+	{
+		this.itemID = itemID;
+		this.priceDate = priceDate;
+		this.url = url;
+		this.storeName = storeName;
+		this.price = price;
+		this.title = title;
+		this.system = system;
+		this.priceDate = priceDate;
+		this.notifyPrice = notifyPrice;
+		this.headerImageURL = headerImageURL;
 	}
 	
 	public long getItemID()
@@ -89,5 +105,15 @@ public class UserTrackItemjava {
 	public double getPrice()
 	{
 		return this.price;
+	}
+	
+	public void setHeaderImageURL(String url)
+	{
+		this.headerImageURL = url;
+	}
+	
+	public String getHeaderImageURL()
+	{
+		return this.headerImageURL;
 	}
 }
